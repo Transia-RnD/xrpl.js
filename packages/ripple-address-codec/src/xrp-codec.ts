@@ -46,12 +46,12 @@ class Codec {
     opts: {
       versions: Array<number | number[]>
       expectedLength?: number
-      versionTypes?: ['ed25519', 'secp256k1']
+      versionTypes?: ['ed25519', 'secp256k1', 'dilithium']
     },
   ): {
     version: number[]
     bytes: Uint8Array
-    type: 'ed25519' | 'secp256k1' | null
+    type: 'ed25519' | 'secp256k1' | 'dilithium' | null
   } {
     const versions = opts.versions
     const types = opts.versionTypes
@@ -153,6 +153,8 @@ const NODE_PUBLIC = 0x1c
 
 // [1, 225, 75]
 const ED25519_SEED = [0x01, 0xe1, 0x4b]
+//
+const DILITHIUM_SEED = 0x22
 
 const codecOptions = {
   sha256,
@@ -163,19 +165,22 @@ const codecWithXrpAlphabet = new Codec(codecOptions)
 export const codec = codecWithXrpAlphabet
 
 // entropy is a Uint8Array of size 16
-// type is 'ed25519' or 'secp256k1'
+// type is 'ed25519' or 'secp256k1' or 'dilithium'
 export function encodeSeed(
   entropy: ByteArray,
-  type: 'ed25519' | 'secp256k1',
+  type: 'ed25519' | 'secp256k1' | 'dilithium',
 ): string {
   if (!checkByteLength(entropy, 16)) {
     throw new Error('entropy must have length 16')
   }
   const opts = {
     expectedLength: 16,
-
-    // for secp256k1, use `FAMILY_SEED`
-    versions: type === 'ed25519' ? ED25519_SEED : [FAMILY_SEED],
+    versions:
+      type === 'ed25519'
+        ? ED25519_SEED
+        : type === 'dilithium'
+        ? [DILITHIUM_SEED]
+        : [FAMILY_SEED],
   }
 
   // prefixes entropy with version bytes
@@ -185,18 +190,18 @@ export function encodeSeed(
 export function decodeSeed(
   seed: string,
   opts: {
-    versionTypes: ['ed25519', 'secp256k1']
+    versionTypes: ['ed25519', 'secp256k1', 'dilithium']
     versions: Array<number | number[]>
     expectedLength: number
   } = {
-    versionTypes: ['ed25519', 'secp256k1'],
-    versions: [ED25519_SEED, FAMILY_SEED],
+    versionTypes: ['ed25519', 'secp256k1', 'dilithium'],
+    versions: [ED25519_SEED, FAMILY_SEED, DILITHIUM_SEED],
     expectedLength: 16,
   },
 ): {
   version: number[]
   bytes: Uint8Array
-  type: 'ed25519' | 'secp256k1' | null
+  type: 'ed25519' | 'secp256k1' | 'dilithium' | null
 } {
   return codecWithXrpAlphabet.decode(seed, opts)
 }

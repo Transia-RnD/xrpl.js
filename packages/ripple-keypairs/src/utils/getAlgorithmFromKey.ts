@@ -7,6 +7,7 @@ enum Prefix {
   SECP256K1_PUB_X_ODD_Y = 0x03,
   SECP256K1_PUB_XY = 0x04,
   SECP256K1_PRIVATE = 0x00,
+  DILITHIUM = 0x8c,
 }
 
 type CompositeKey = `${KeyType}_${Prefix}_${number}`
@@ -21,6 +22,8 @@ type CompositeKey = `${KeyType}_${Prefix}_${number}`
  * | secp256k1 | Public (3)  |  0x04  |   65   | prefix + 32 x-bytes + 32 y-bytes                      | ecdsa-secp256k1 |
  * | secp256k1 | Private (1) |  None  |   32   | Uint256BE (0 < n < order)                             | ecdsa-secp256k1 |
  * | secp256k1 | Private (2) |  0x00  |   33   | prefix + Uint256BE (0 < n < order)                    | ecdsa-secp256k1 |
+ * | lattice   | Private     |  None  |   2560 | N/A                                                   |       dilithium |
+ * | lattice   | Public      |  None  |   1312 | N/A                                                   |       dilithium |
  *
  * Note: The 0x00 prefix for secpk256k1 Private (2) essentially 0 pads the number
  *       and the interpreted number is the same as 32 bytes.
@@ -33,6 +36,8 @@ const KEY_TYPES: Record<CompositeKey, Algorithm> = {
   [`public_${Prefix.SECP256K1_PUB_X}_33`]: 'ecdsa-secp256k1',
   [`public_${Prefix.SECP256K1_PUB_X_ODD_Y}_33`]: 'ecdsa-secp256k1',
   [`public_${Prefix.SECP256K1_PUB_XY}_65`]: 'ecdsa-secp256k1',
+  [`private_${Prefix.DILITHIUM}_2560`]: 'dilithium',
+  [`public_${Prefix.DILITHIUM}_1312`]: 'dilithium',
 }
 
 function getKeyInfo(key: HexString) {
@@ -84,7 +89,7 @@ function keyError({
 
 Type: ${type}
 Key: ${key}
-Prefix: ${prefixRepr(prefix)} 
+Prefix: ${prefixRepr(prefix)}
 Length: ${len} bytes
 
 Acceptable ${type} formats are:

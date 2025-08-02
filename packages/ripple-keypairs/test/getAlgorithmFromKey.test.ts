@@ -52,16 +52,17 @@ describe('getAlgorithmFromKey', () => {
       if (error instanceof Error) {
         expect(dedent(error.message)).toEqual(
           dedent(`invalid_key:
-  
+
         Type: private
         Key: ffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        Prefix: 0xff 
+        Prefix: 0xff
         Length: 31 bytes
-  
+
         Acceptable private formats are:
         ecdsa-secp256k1   - Prefix: None   Length: 32 bytes
         ecdsa-secp256k1   - Prefix: 0x00   Length: 33 bytes
         ed25519           - Prefix: 0xed   Length: 33 bytes
+        dilithium         - Prefix: 0x8c   Length: 2560 bytes
     `),
         )
       }
@@ -80,7 +81,7 @@ describe('getAlgorithmFromKey', () => {
 
       Type: public
       Key: ffaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-      Prefix: 0xff 
+      Prefix: 0xff
       Length: 31 bytes
 
       Acceptable public formats are:
@@ -88,6 +89,7 @@ describe('getAlgorithmFromKey', () => {
       ecdsa-secp256k1   - Prefix: 0x02   Length: 33 bytes
       ecdsa-secp256k1   - Prefix: 0x03   Length: 33 bytes
       ecdsa-secp256k1   - Prefix: 0x04   Length: 65 bytes
+      dilithium         - Prefix: 0x8c   Length: 1312 bytes
     `),
         )
       }
