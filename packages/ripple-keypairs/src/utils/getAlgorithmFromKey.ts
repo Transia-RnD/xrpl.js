@@ -7,7 +7,7 @@ enum Prefix {
   SECP256K1_PUB_X_ODD_Y = 0x03,
   SECP256K1_PUB_XY = 0x04,
   SECP256K1_PRIVATE = 0x00,
-  DILITHIUM = 0x8c,
+  DILITHIUM = -1,
 }
 
 type CompositeKey = `${KeyType}_${Prefix}_${number}`
@@ -42,7 +42,10 @@ const KEY_TYPES: Record<CompositeKey, Algorithm> = {
 
 function getKeyInfo(key: HexString) {
   return {
-    prefix: key.length < 2 ? Prefix.NONE : parseInt(key.slice(0, 2), 16),
+    prefix:
+      key.length < 2 || key.length > 1000
+        ? Prefix.NONE
+        : parseInt(key.slice(0, 2), 16),
     len: key.length / 2,
   }
 }
