@@ -134,8 +134,8 @@ class Data extends SerializedType {
           typeof json.value === 'string'
             ? parseInt(json.value, 10)
             : typeof json.value === 'number'
-            ? json.value
-            : Number(json.value)
+              ? json.value
+              : Number(json.value)
         if (
           typeof val !== 'number' ||
           Number.isNaN(val) ||
@@ -154,8 +154,8 @@ class Data extends SerializedType {
           typeof json.value === 'string'
             ? parseInt(json.value, 10)
             : typeof json.value === 'number'
-            ? json.value
-            : Number(json.value)
+              ? json.value
+              : Number(json.value)
         if (
           typeof val !== 'number' ||
           Number.isNaN(val) ||
@@ -174,8 +174,8 @@ class Data extends SerializedType {
           typeof json.value === 'string'
             ? parseInt(json.value, 10)
             : typeof json.value === 'number'
-            ? json.value
-            : Number(json.value)
+              ? json.value
+              : Number(json.value)
         dataValue = UInt32.from(val)
         dataBytes = (dataValue as UInt32).toBytes()
         break
