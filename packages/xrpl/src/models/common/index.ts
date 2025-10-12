@@ -242,3 +242,43 @@ export interface MPTokenMetadataUrl {
   type: string
   title: string
 }
+
+export interface Function {
+  Function: {
+    FunctionName: string
+    Parameters?: Parameter[]
+  }
+}
+
+export interface ParameterType {
+  type: string
+}
+
+export interface ParameterValue {
+  type: string
+  value: any
+}
+
+export interface Parameter {
+  Parameter: {
+    ParameterFlag?: number
+    ParameterName?: string
+    ParameterType?: ParameterType
+    ParameterValue?: ParameterValue
+  }
+}
+
+export interface InstanceParameter {
+  InstanceParameter: {
+    ParameterFlag: number
+    ParameterName: string
+    ParameterType: ParameterType
+  }
+}
+
+export interface InstanceParameterValue {
+  InstanceParameterValue: {
+    ParameterFlag: number
+    ParameterValue: ParameterValue
+  }
+}
