@@ -801,3 +801,26 @@ export interface ContractParameterFlagsInterface extends GlobalFlagsInterface {
   tfSendNFToken?: boolean
   tfAuthorizeToken?: boolean
 }
+
+/**
+ * Enum representing values of {@link ContractParameter} transaction flags.
+ *
+ * @category Transaction Flags
+ */
+export enum ContractParameterFlags {
+  tfSendAmount = 0x00010000,
+  tfSendNFToken = 0x00020000,
+  tfAuthorizeToken = 0x00040000,
+}
+
+/**
+ * Map of flags to boolean values representing {@link ContractParameter} transaction
+ * flags.
+ *
+ * @category Transaction Flags
+ */
+export interface ContractParameterFlagsInterface extends GlobalFlagsInterface {
+  tfSendAmount?: boolean
+  tfSendNFToken?: boolean
+  tfAuthorizeToken?: boolean
+}
