@@ -51,7 +51,11 @@ import type {
   EventTypes,
   OnEventToListenerMap,
 } from '../models/methods/subscribe'
-import type { SubmittableTransaction } from '../models/transactions'
+import type {
+  SubmittableTransaction,
+  Transaction,
+  TransactionMetadata,
+} from '../models/transactions'
 import { convertTxFlagsToNumber } from '../models/utils/flags'
 import {
   ensureClassicAddress,
@@ -59,6 +63,7 @@ import {
   getSignedTx,
   getLastLedgerSequence,
   waitForFinalTransactionOutcome,
+  getBatchFinalTransactionOutcome,
 } from '../sugar'
 import {
   setValidAddresses,
@@ -98,6 +103,7 @@ import {
   handlePartialPayment,
   handleStreamPartialPayment,
 } from './partialPayment'
+import { DebugStreamManager } from '../sugar/simulate/debugger'
 
 export interface ClientOptions extends ConnectionUserOptions {
   /**
@@ -132,16 +138,16 @@ type RequestNextPageType =
 type RequestNextPageReturnMap<T> = T extends AccountChannelsRequest
   ? AccountChannelsResponse
   : T extends AccountLinesRequest
-    ? AccountLinesResponse
-    : T extends AccountObjectsRequest
-      ? AccountObjectsResponse
-      : T extends AccountOffersRequest
-        ? AccountOffersResponse
-        : T extends AccountTxRequest
-          ? AccountTxResponse
-          : T extends LedgerDataRequest
-            ? LedgerDataResponse
-            : never
+  ? AccountLinesResponse
+  : T extends AccountObjectsRequest
+  ? AccountObjectsResponse
+  : T extends AccountOffersRequest
+  ? AccountOffersResponse
+  : T extends AccountTxRequest
+  ? AccountTxResponse
+  : T extends LedgerDataRequest
+  ? LedgerDataResponse
+  : never
 
 /**
  * Get the response key / property name that contains the listed data for a
@@ -231,6 +237,8 @@ class Client extends EventEmitter<EventTypes> {
    */
   public apiVersion: APIVersion = DEFAULT_API_VERSION
 
+  public debugStreamManager: DebugStreamManager
+
   /**
    * Creates a new Client with a websocket connection to a rippled server.
    *
@@ -257,6 +265,8 @@ class Client extends EventEmitter<EventTypes> {
     this.maxFeeXRP = options.maxFeeXRP ?? DEFAULT_MAX_FEE_XRP
 
     this.connection = new Connection(server, options)
+
+    this.debugStreamManager = new DebugStreamManager()
 
     this.connection.on('error', (errorCode, errorMessage, data) => {
       this.emit('error', errorCode, errorMessage, data)
@@ -848,8 +858,21 @@ class Client extends EventEmitter<EventTypes> {
       failHard?: boolean
       // A wallet to sign a transaction. It must be provided when submitting an unsigned transaction.
       wallet?: Wallet
+      // Open the debug stream for this transaction
+      debug?: boolean
     },
-  ): Promise<TxResponse<T>> {
+  ): Promise<
+    TxResponse<T> & {
+      batchResult?: {
+        validated: boolean
+        results: Array<{
+          hash: string
+          meta: TransactionMetadata
+          tx_json: Transaction
+        }>
+      }
+    }
+  > {
     const signedTx = await getSignedTx(this, transaction, opts)
 
     const lastLedger = getLastLedgerSequence(signedTx)
@@ -868,12 +891,45 @@ class Client extends EventEmitter<EventTypes> {
     }
 
     const txHash = hashes.hashSignedTx(signedTx)
-    return waitForFinalTransactionOutcome(
+    const awaitedTxnResult = await waitForFinalTransactionOutcome(
       this,
       txHash,
       lastLedger,
       response.result.engine_result,
     )
+
+    if (
+      typeof (awaitedTxnResult.result.tx_json as Transaction) === 'object' &&
+      (awaitedTxnResult.result.tx_json as Transaction).TransactionType ===
+        'Batch' &&
+      Array.isArray(awaitedTxnResult.result.tx_json.RawTransactions)
+    ) {
+      // Iterate over each raw transaction in the batch and wait for its outcome
+      const { validated, results } = await getBatchFinalTransactionOutcome(
+        this,
+        awaitedTxnResult,
+      )
+
+      if (!validated) {
+        return {
+          ...(awaitedTxnResult as TxResponse<T>),
+          batchResult: {
+            validated: false,
+            results: results,
+          },
+        }
+      }
+
+      return {
+        ...(awaitedTxnResult as TxResponse<T>),
+        batchResult: {
+          validated: true,
+          results: results,
+        },
+      }
+    }
+
+    return awaitedTxnResult as TxResponse<T>
   }
 
   /**

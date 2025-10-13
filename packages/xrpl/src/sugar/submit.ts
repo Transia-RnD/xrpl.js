@@ -4,13 +4,16 @@ import type {
   SubmitResponse,
   SubmittableTransaction,
   Transaction,
+  TransactionMetadata,
   Wallet,
 } from '..'
 import { ValidationError, XrplError } from '../errors'
 import { Signer } from '../models/common'
 import { TxResponse } from '../models/methods'
-import { BaseTransaction } from '../models/transactions/common'
-import { decode, encode } from '../utils'
+import { BatchFlags } from '../models/transactions/batch'
+import { BaseTransaction, GlobalFlags } from '../models/transactions/common'
+import { hasFlag } from '../models/utils'
+import { decode, encode, hashes } from '../utils'
 
 /** Approximate time for a ledger to close, in milliseconds */
 const LEDGER_CLOSE_TIME = 1000
@@ -187,6 +190,136 @@ function isSigned(transaction: SubmittableTransaction | string): boolean {
     return true
   }
   return tx.SigningPubKey != null && tx.TxnSignature != null
+}
+/**
+ * Processes a batch transaction outcome by analyzing the provided transaction results and the outer batch transaction.
+ * This function does not submit new transactions; it only evaluates the results.
+ * It fetches the ledger containing the batch transaction and checks for the presence and status of the raw transactions.
+ *
+ * @param client - The XRPL client.
+ * @param rawTransactionResults - Array of results for the raw transactions included in the batch.
+ * @param batchResult - The preliminary result of the batch transaction.
+ * @returns A promise that resolves to an object containing the status of each raw transaction.
+ */
+export async function getBatchFinalTransactionOutcome(
+  client: Client,
+  batchResult: TxResponse<Transaction>,
+): Promise<{
+  validated: boolean
+  results: Array<{
+    hash: string
+    meta: TransactionMetadata
+    tx_json: Transaction
+  }>
+}> {
+  const outerBatch = batchResult.result.tx_json as Transaction
+  const innerBatchTxns = outerBatch.RawTransactions as Transaction[]
+  const ledgerIndex = batchResult.result.ledger_index
+
+  // Fetch the full ledger containing the batch transaction
+  const ledgerResponse = await client.request({
+    command: 'ledger',
+    ledger_index: ledgerIndex,
+    transactions: true,
+    expand: true,
+  })
+
+  const ledgerTxs = ledgerResponse.result.ledger.transactions as Array<
+    Transaction & {
+      hash: string
+      metaData?: TransactionMetadata
+    }
+  >
+
+  const isChildOfOuterBatch = (tx: any) =>
+    tx.meta.ParentBatchID === batchResult.result.hash &&
+    hasFlag(tx.tx_json, GlobalFlags.tfInnerBatchTxn, 'tfInnerBatchTxn')
+
+  // Hash all raw transactions in the inner batch
+  const ledgerTxnResults = ledgerTxs.filter(isChildOfOuterBatch)
+
+  // Iterate over each raw transaction in the batch and wait for its outcome
+  const awaitedTxnResultWithInner: Array<{
+    hash: string
+    meta: TransactionMetadata
+    tx_json: Transaction
+  }> = []
+
+  let isValidated: boolean = false
+  for (const tx of innerBatchTxns) {
+    const innerTxn = tx.RawTransaction as Transaction
+    const txHash = hashes.hashSignedTx(innerTxn)
+    const ledgerResult =
+      ledgerTxnResults.find((tx) => tx.hash === txHash) || null
+
+    if (
+      !ledgerResult &&
+      hasFlag(outerBatch, BatchFlags.tfAllOrNothing, 'tfAllOrNothing')
+    ) {
+      awaitedTxnResultWithInner.push({
+        hash: txHash,
+        meta: {
+          TransactionResult: 'tecBATCH_FAILED',
+          AffectedNodes: [],
+          TransactionIndex: 0,
+        },
+        tx_json: { ...innerTxn },
+      })
+      continue
+    }
+    if (
+      !ledgerResult &&
+      hasFlag(outerBatch, BatchFlags.tfUntilFailure, 'tfUntilFailure')
+    ) {
+      isValidated = true
+      awaitedTxnResultWithInner.push({
+        hash: txHash,
+        meta: {
+          TransactionResult: 'tecBATCH_FAILED',
+          AffectedNodes: [],
+          TransactionIndex: 0,
+        },
+        tx_json: { ...innerTxn },
+      })
+      break
+    }
+
+    if (
+      ledgerResult &&
+      hasFlag(outerBatch, BatchFlags.tfOnlyOne, 'tfOnlyOne')
+    ) {
+      awaitedTxnResultWithInner.push({
+        hash: ledgerResult.hash,
+        meta: ledgerResult.metaData as TransactionMetadata,
+        tx_json: innerTxn,
+      })
+      isValidated = true
+      break
+    }
+
+    if (ledgerResult) {
+      awaitedTxnResultWithInner.push({
+        hash: ledgerResult.hash,
+        meta: ledgerResult.metaData as TransactionMetadata,
+        tx_json: innerTxn,
+      })
+      continue
+    }
+  }
+
+  isValidated = isValidated
+    ? true
+    : awaitedTxnResultWithInner.length === innerBatchTxns.length
+
+  return {
+    validated: isValidated,
+    results: awaitedTxnResultWithInner,
+  }
+  // If all raw transaction are not found, then we need to do special handling
+  // 1. AllOrNothing: If the outer batch failed, then all inner transactions will not apprear in the ledger.
+  // 2. OnlyOne: The first inner batch transaction that is successful will appear in the ledger. Nothing else.
+  // 3. UntilFailure: All inner batch transactions up to and including the first failure will appear in the ledger.
+  // 4. Independent: All inner batch transactions that are successful will appear in the ledger.
 }
 
 /**
