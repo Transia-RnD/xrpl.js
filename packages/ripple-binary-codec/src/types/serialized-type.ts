@@ -222,6 +222,10 @@ class SerializedType {
   toString(): string {
     return this.toHex()
   }
+
+  getSType(): SerializedTypeID {
+    return this.getSType()
+  }
 }
 
 /**

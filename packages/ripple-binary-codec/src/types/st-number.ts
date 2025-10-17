@@ -1,5 +1,5 @@
 import { BinaryParser } from '../serdes/binary-parser'
-import { SerializedType } from './serialized-type'
+import { SerializedType, SerializedTypeID } from './serialized-type'
 import { writeInt32BE, writeInt64BE, readInt32BE, readInt64BE } from '../utils'
 
 /**
@@ -230,5 +230,9 @@ export class STNumber extends SerializedType {
     return `${isNegative ? '-' : ''}${integerPart}${
       fractionPart ? '.' + fractionPart : ''
     }`
+  }
+
+  getSType(): SerializedTypeID {
+    return SerializedTypeID.STI_NUMBER
   }
 }

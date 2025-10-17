@@ -4,7 +4,7 @@ import {
   Bytes,
   XrplDefinitionsBase,
 } from '../enums'
-import { SerializedType, JsonObject } from './serialized-type'
+import { SerializedType, JsonObject, SerializedTypeID } from './serialized-type'
 import { xAddressToClassicAddress, isValidXAddress } from 'ripple-address-codec'
 import { BinaryParser } from '../serdes/binary-parser'
 import { BinarySerializer, BytesList } from '../serdes/binary-serializer'
@@ -148,16 +148,16 @@ class STObject extends SerializedType {
         field.type.name === ST_OBJECT
           ? this.from(xAddressDecoded[field.name], undefined, definitions)
           : field.type.name === 'STArray'
-            ? STArray.from(xAddressDecoded[field.name], definitions)
-            : field.type.name === 'UInt64'
-              ? UInt64.from(xAddressDecoded[field.name], field.name)
-              : field.associatedType?.from
-                ? field.associatedType.from(xAddressDecoded[field.name])
-                : (() => {
-                    throw new Error(
-                      `Type ${field.type.name} for field ${field.name} is missing associatedType.from`,
-                    )
-                  })()
+          ? STArray.from(xAddressDecoded[field.name], definitions)
+          : field.type.name === 'UInt64'
+          ? UInt64.from(xAddressDecoded[field.name], field.name)
+          : field.associatedType?.from
+          ? field.associatedType.from(xAddressDecoded[field.name])
+          : (() => {
+              throw new Error(
+                `Type ${field.type.name} for field ${field.name} is missing associatedType.from`,
+              )
+            })()
 
       if (associatedValue == undefined) {
         throw new TypeError(
@@ -206,6 +206,10 @@ class STObject extends SerializedType {
     }
 
     return accumulator
+  }
+
+  getSType(): SerializedTypeID {
+    return SerializedTypeID.STI_OBJECT
   }
 }
 

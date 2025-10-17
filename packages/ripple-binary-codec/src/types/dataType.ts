@@ -168,6 +168,10 @@ class DataType extends SerializedType {
       type: this.getInnerTypeString(),
     }
   }
+
+  getSType(): SerializedTypeID {
+    return SerializedTypeID.STI_DATATYPE
+  }
 }
 
 // Export the DataType class for external use

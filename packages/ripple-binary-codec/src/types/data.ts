@@ -487,6 +487,10 @@ class Data extends SerializedType {
 
     return true
   }
+
+  getSType(): SerializedTypeID {
+    return SerializedTypeID.STI_DATA
+  }
 }
 
 export { Data }
