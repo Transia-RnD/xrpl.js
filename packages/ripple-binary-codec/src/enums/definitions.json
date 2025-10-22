@@ -3363,6 +3363,7 @@
     "VaultWithdraw": 69,
     "XChainAccountCreateCommit": 44,
     "XChainAddClaimAttestation": 45,
+    "XChainAddAccountCreateAttestation": 46,
     "XChainClaim": 43,
     "XChainCommit": 42,
     "XChainCreateBridge": 48,
