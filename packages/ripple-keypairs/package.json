@@ -1,6 +1,6 @@
 {
   "name": "@transia/ripple-keypairs",
-  "version": "2.0.1-alpha.0",
+  "version": "2.0.2-alpha.0",
   "description": "Cryptographic key pairs for the XRP Ledger",
   "scripts": {
     "build": "tsc --build tsconfig.build.json",
@@ -20,8 +20,8 @@
   },
   "dependencies": {
     "@noble/curves": "^1.0.0",
-    "@transia/isomorphic": "^1.0.2-alpha.0",
-    "@transia/ripple-address-codec": "^5.0.1-alpha.0"
+    "@transia/isomorphic": "^1.0.3-alpha.0",
+    "@transia/ripple-address-codec": "^5.0.2-alpha.0"
   },
   "keywords": [
     "ripple",
