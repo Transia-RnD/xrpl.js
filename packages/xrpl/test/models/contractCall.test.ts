@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 
 import { validate, ValidationError } from '../../src'
-import { validateContractCall } from '../../src/models/transactions/ContractCall'
+import { validateContractCall } from '../../src/models/transactions/contractCall'
 
 /**
  * ContractCall Transaction Verification Testing.

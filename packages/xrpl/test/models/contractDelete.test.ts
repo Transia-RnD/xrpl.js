@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 
 import { validate, ValidationError } from '../../src'
-import { validateContractDelete } from '../../src/models/transactions/ContractDelete'
+import { validateContractDelete } from '../../src/models/transactions/contractDelete'
 
 /**
  * ContractDelete Transaction Verification Testing.
@@ -12,7 +12,9 @@ describe('ContractDelete', function () {
   let tx
 
   beforeEach(function () {
-    tx = { /* TODO: add sample transaction */ } as any
+    tx = {
+      /* TODO: add sample transaction */
+    } as any
   })
 
   it('verifies valid ContractDelete', function () {
@@ -20,7 +22,7 @@ describe('ContractDelete', function () {
     assert.doesNotThrow(() => validate(tx))
   })
 
-  it("throws w/ missing ContractAccount", function () {
+  it('throws w/ missing ContractAccount', function () {
     delete tx.ContractAccount
 
     assert.throws(

@@ -3,7 +3,7 @@ import {
   decodeSeed,
   encodeAccountID,
   encodeSeed,
-} from 'ripple-address-codec'
+} from '@transia/ripple-address-codec'
 import { ripemd160 } from '@xrplf/isomorphic/ripemd160'
 import { sha256 } from '@xrplf/isomorphic/sha256'
 import { hexToBytes, randomBytes } from '@xrplf/isomorphic/utils'

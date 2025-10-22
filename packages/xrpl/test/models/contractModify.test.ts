@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 
 import { validate, ValidationError } from '../../src'
-import { validateContractModify } from '../../src/models/transactions/ContractModify'
+import { validateContractModify } from '../../src/models/transactions/contractModify'
 
 /**
  * ContractModify Transaction Verification Testing.
@@ -12,7 +12,9 @@ describe('ContractModify', function () {
   let tx
 
   beforeEach(function () {
-    tx = { /* TODO: add sample transaction */ } as any
+    tx = {
+      /* TODO: add sample transaction */
+    } as any
   })
 
   it('verifies valid ContractModify', function () {
@@ -66,13 +68,14 @@ describe('ContractModify', function () {
   })
 
   it('throws w/ invalid Functions', function () {
-    tx.Functions = /*TODO*/
+    tx.Functions =
+      /*TODO*/
 
-    assert.throws(
-      () => validateContractModify(tx),
-      ValidationError,
-      'ContractModify: invalid field Functions',
-    )
+      assert.throws(
+        () => validateContractModify(tx),
+        ValidationError,
+        'ContractModify: invalid field Functions',
+      )
     assert.throws(
       () => validate(tx),
       ValidationError,
@@ -81,13 +84,14 @@ describe('ContractModify', function () {
   })
 
   it('throws w/ invalid InstanceParameters', function () {
-    tx.InstanceParameters = /*TODO*/
+    tx.InstanceParameters =
+      /*TODO*/
 
-    assert.throws(
-      () => validateContractModify(tx),
-      ValidationError,
-      'ContractModify: invalid field InstanceParameters',
-    )
+      assert.throws(
+        () => validateContractModify(tx),
+        ValidationError,
+        'ContractModify: invalid field InstanceParameters',
+      )
     assert.throws(
       () => validate(tx),
       ValidationError,
@@ -96,13 +100,14 @@ describe('ContractModify', function () {
   })
 
   it('throws w/ invalid InstanceParameterValues', function () {
-    tx.InstanceParameterValues = /*TODO*/
+    tx.InstanceParameterValues =
+      /*TODO*/
 
-    assert.throws(
-      () => validateContractModify(tx),
-      ValidationError,
-      'ContractModify: invalid field InstanceParameterValues',
-    )
+      assert.throws(
+        () => validateContractModify(tx),
+        ValidationError,
+        'ContractModify: invalid field InstanceParameterValues',
+      )
     assert.throws(
       () => validate(tx),
       ValidationError,

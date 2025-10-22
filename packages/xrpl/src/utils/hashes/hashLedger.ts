@@ -5,7 +5,7 @@
 
 import { bytesToHex } from '@xrplf/isomorphic/utils'
 import BigNumber from 'bignumber.js'
-import { decode, encode } from 'ripple-binary-codec'
+import { decode, encode } from '@transia/ripple-binary-codec'
 
 import { ValidationError, XrplError } from '../../errors'
 import { APIVersion } from '../../models'

@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 
 import { validate, ValidationError } from '../../src'
-import { validateContractUserDelete } from '../../src/models/transactions/ContractUserDelete'
+import { validateContractUserDelete } from '../../src/models/transactions/contractUserDelete'
 
 /**
  * ContractUserDelete Transaction Verification Testing.
@@ -12,7 +12,9 @@ describe('ContractUserDelete', function () {
   let tx
 
   beforeEach(function () {
-    tx = { /* TODO: add sample transaction */ } as any
+    tx = {
+      /* TODO: add sample transaction */
+    } as any
   })
 
   it('verifies valid ContractUserDelete', function () {
@@ -20,7 +22,7 @@ describe('ContractUserDelete', function () {
     assert.doesNotThrow(() => validate(tx))
   })
 
-  it("throws w/ missing ComputationAllowance", function () {
+  it('throws w/ missing ComputationAllowance', function () {
     delete tx.ComputationAllowance
 
     assert.throws(
@@ -50,7 +52,7 @@ describe('ContractUserDelete', function () {
     )
   })
 
-  it("throws w/ missing ContractAccount", function () {
+  it('throws w/ missing ContractAccount', function () {
     delete tx.ContractAccount
 
     assert.throws(
@@ -80,7 +82,7 @@ describe('ContractUserDelete', function () {
     )
   })
 
-  it("throws w/ missing FunctionName", function () {
+  it('throws w/ missing FunctionName', function () {
     delete tx.FunctionName
 
     assert.throws(
@@ -111,13 +113,14 @@ describe('ContractUserDelete', function () {
   })
 
   it('throws w/ invalid Parameters', function () {
-    tx.Parameters = /*TODO*/
+    tx.Parameters =
+      /*TODO*/
 
-    assert.throws(
-      () => validateContractUserDelete(tx),
-      ValidationError,
-      'ContractUserDelete: invalid field Parameters',
-    )
+      assert.throws(
+        () => validateContractUserDelete(tx),
+        ValidationError,
+        'ContractUserDelete: invalid field Parameters',
+      )
     assert.throws(
       () => validate(tx),
       ValidationError,

@@ -1,5 +1,5 @@
 {
-  "name": "@xrplf/isomorphic",
+  "name": "@transia/isomorphic",
   "version": "1.0.1",
   "description": "A collection of isomorphic and tree-shakeable crypto hashes and utils for xrpl.js",
   "keywords": [

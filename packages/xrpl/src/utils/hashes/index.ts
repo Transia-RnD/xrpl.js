@@ -5,7 +5,7 @@
 
 import { bytesToHex } from '@xrplf/isomorphic/utils'
 import BigNumber from 'bignumber.js'
-import { decodeAccountID } from 'ripple-address-codec'
+import { decodeAccountID } from '@transia/ripple-address-codec'
 
 import hashLedger, {
   hashLedgerHeader,

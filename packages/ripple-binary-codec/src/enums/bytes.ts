@@ -57,6 +57,9 @@ export class BytesLookup {
       )
     }
     if (this[value.toString()]) {
+      console.log(name)
+      console.log(value.toString())
+
       throw new SyntaxError(
         `Attempted to add a duplicate value under a different name (Given name: "${name}" and previous name: "${
           this[value.toString()]
