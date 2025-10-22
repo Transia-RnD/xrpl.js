@@ -1,4 +1,4 @@
-import { bytesToHex, hexToBytes } from '@xrplf/isomorphic/utils'
+import { bytesToHex, hexToBytes } from '@transia/isomorphic/utils'
 
 import {
   classicAddressToXAddress,

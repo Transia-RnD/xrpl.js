@@ -1,6 +1,6 @@
 import { BinaryParser } from '../src/binary'
 import { coreTypes } from '../src/types'
-// import { bytesToHex, hexToBytes } from '@xrplf/isomorphic/utils'
+// import { bytesToHex, hexToBytes } from '@transia/isomorphic/utils'
 
 const { Data } = coreTypes
 

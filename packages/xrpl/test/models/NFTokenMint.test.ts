@@ -1,4 +1,4 @@
-import { stringToHex } from '@xrplf/isomorphic/src/utils'
+import { stringToHex } from '@transia/isomorphic/src/utils'
 
 import { NFTokenMintFlags } from '../../src'
 import { validateNFTokenMint } from '../../src/models/transactions/NFTokenMint'

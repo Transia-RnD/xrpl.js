@@ -1,6 +1,6 @@
 import { FieldInstance } from '../enums'
 import { type SerializedType } from '../types/serialized-type'
-import { bytesToHex, concat } from '@xrplf/isomorphic/utils'
+import { bytesToHex, concat } from '@transia/isomorphic/utils'
 
 /**
  * Bytes list is a collection of Uint8Array objects

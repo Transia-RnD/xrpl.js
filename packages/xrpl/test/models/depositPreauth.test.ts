@@ -1,4 +1,4 @@
-import { stringToHex } from '@xrplf/isomorphic/utils'
+import { stringToHex } from '@transia/isomorphic/utils'
 
 import { AuthorizeCredential } from '../../src'
 import { validateDepositPreauth } from '../../src/models/transactions/depositPreauth'

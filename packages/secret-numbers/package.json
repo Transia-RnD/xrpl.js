@@ -44,5 +44,9 @@
     "xrpl-ledger",
     "multi sign",
     "sign"
-  ]
+  ],
+  "gitHead": "2d033ff3e1bb7a47deae2b43f6a5fa9f1340565b",
+  "publishConfig": {
+    "access": "public"
+  }
 }

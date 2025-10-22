@@ -8,7 +8,7 @@ import {
   sign,
   verify,
 } from '../src'
-import { stringToHex } from '@xrplf/isomorphic/utils'
+import { stringToHex } from '@transia/isomorphic/utils'
 
 const entropy = new Uint8Array([
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,

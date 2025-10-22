@@ -1,8 +1,8 @@
 /* eslint-disable max-lines -- Connection is a large file w/ lots of imports/exports */
 import type { Agent } from 'http'
 
-import { bytesToHex, hexToString } from '@xrplf/isomorphic/utils'
-import WebSocket, { ClientOptions } from '@xrplf/isomorphic/ws'
+import { bytesToHex, hexToString } from '@transia/isomorphic/utils'
+import WebSocket, { ClientOptions } from '@transia/isomorphic/ws'
 import { EventEmitter } from 'eventemitter3'
 
 import {

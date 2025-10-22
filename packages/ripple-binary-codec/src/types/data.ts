@@ -10,7 +10,7 @@ import {
   TYPE_NUMBER_TO_ID,
 } from './serialized-type'
 import { readUInt16BE, writeUInt16BE } from '../utils'
-import { bytesToHex, concat } from '@xrplf/isomorphic/utils'
+import { bytesToHex, concat } from '@transia/isomorphic/utils'
 import { Hash128 } from './hash-128'
 import { Hash160 } from './hash-160'
 import { Hash192 } from './hash-192'

@@ -15,7 +15,7 @@
     "update:confirm": "npx npm-check-updates --configFileName .ncurc.json -u"
   },
   "dependencies": {
-   "@transia/isomorphic": "file:packages/isomorphic",
+    "@transia/isomorphic": "file:packages/isomorphic",
     "@transia/secret-numbers": "file:packages/secret-numbers",
     "@transia/ripple-address-codec": "file:packages/ripple-address-codec",
     "@transia/ripple-binary-codec": "file:packages/ripple-binary-codec",

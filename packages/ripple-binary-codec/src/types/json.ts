@@ -2,7 +2,7 @@
 /* eslint-disable complexity */
 import { BinaryParser } from '../serdes/binary-parser'
 import { JsonObject, SerializedType, SerializedTypeID } from './serialized-type'
-import { bytesToHex } from '@xrplf/isomorphic/utils'
+import { bytesToHex } from '@transia/isomorphic/utils'
 import { BinarySerializer, BytesList } from '../serdes/binary-serializer'
 
 /**

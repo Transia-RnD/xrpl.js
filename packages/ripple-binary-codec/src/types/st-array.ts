@@ -2,7 +2,7 @@ import { DEFAULT_DEFINITIONS, XrplDefinitionsBase } from '../enums'
 import { SerializedType, JsonObject, SerializedTypeID } from './serialized-type'
 import { STObject } from './st-object'
 import { BinaryParser } from '../serdes/binary-parser'
-import { concat } from '@xrplf/isomorphic/utils'
+import { concat } from '@transia/isomorphic/utils'
 
 const ARRAY_END_MARKER = Uint8Array.from([0xf1])
 const ARRAY_END_MARKER_NAME = 'ArrayEndMarker'

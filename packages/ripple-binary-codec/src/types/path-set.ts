@@ -2,7 +2,7 @@ import { AccountID } from './account-id'
 import { Currency } from './currency'
 import { BinaryParser } from '../serdes/binary-parser'
 import { SerializedType, JsonObject, SerializedTypeID } from './serialized-type'
-import { bytesToHex, concat } from '@xrplf/isomorphic/utils'
+import { bytesToHex, concat } from '@transia/isomorphic/utils'
 
 /**
  * Constants for separating Paths in a PathSet

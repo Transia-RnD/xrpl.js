@@ -2,7 +2,7 @@ import { SerializedType, SerializedTypeID } from './serialized-type'
 import { BinaryParser } from '../serdes/binary-parser'
 import { Hash256 } from './hash-256'
 import { BytesList } from '../serdes/binary-serializer'
-import { bytesToHex } from '@xrplf/isomorphic/utils'
+import { bytesToHex } from '@transia/isomorphic/utils'
 
 /**
  * TypeGuard for Array<string>

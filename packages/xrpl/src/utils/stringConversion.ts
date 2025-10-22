@@ -1,4 +1,4 @@
-import { stringToHex, hexToString } from '@xrplf/isomorphic/utils'
+import { stringToHex, hexToString } from '@transia/isomorphic/utils'
 
 /**
  * Converts a string to its hex equivalent. Useful for Memos.

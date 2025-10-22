@@ -1,6 +1,6 @@
 import { UInt } from './uint'
 import { BinaryParser } from '../serdes/binary-parser'
-import { bytesToHex, concat, hexToBytes } from '@xrplf/isomorphic/utils'
+import { bytesToHex, concat, hexToBytes } from '@transia/isomorphic/utils'
 import { readUInt32BE, writeUInt32BE } from '../utils'
 import { DEFAULT_DEFINITIONS, XrplDefinitionsBase } from '../enums'
 import { SerializedTypeID } from './serialized-type'

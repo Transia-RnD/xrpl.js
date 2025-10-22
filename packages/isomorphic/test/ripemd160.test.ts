@@ -1,5 +1,5 @@
-import { ripemd160 } from '@xrplf/isomorphic/ripemd160'
-import { bytesToHex } from '@xrplf/isomorphic/utils'
+import { ripemd160 } from '@transia/isomorphic/ripemd160'
+import { bytesToHex } from '@transia/isomorphic/utils'
 
 describe('ripemd160', () => {
   it('hashes', () => {

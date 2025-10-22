@@ -4,7 +4,7 @@ import {
   FieldInstance,
 } from '../enums'
 import { type SerializedType } from '../types/serialized-type'
-import { hexToBytes } from '@xrplf/isomorphic/utils'
+import { hexToBytes } from '@transia/isomorphic/utils'
 
 /**
  * BinaryParser is used to compute fields and values from a HexString

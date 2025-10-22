@@ -1,5 +1,5 @@
 /* eslint-disable max-lines -- common utility file */
-import { HEX_REGEX, hexToString } from '@xrplf/isomorphic/utils'
+import { HEX_REGEX, hexToString } from '@transia/isomorphic/utils'
 import {
   isValidClassicAddress,
   isValidXAddress,

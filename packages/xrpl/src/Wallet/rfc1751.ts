@@ -10,7 +10,7 @@
  *is part of the public domain.
  */
 
-import { hexToBytes, concat } from '@xrplf/isomorphic/utils'
+import { hexToBytes, concat } from '@transia/isomorphic/utils'
 
 import rfc1751Words from './rfc1751Words.json'
 

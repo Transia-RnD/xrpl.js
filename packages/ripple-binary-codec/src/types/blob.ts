@@ -1,6 +1,6 @@
 import { SerializedType, SerializedTypeID } from './serialized-type'
 import { BinaryParser } from '../serdes/binary-parser'
-import { hexToBytes } from '@xrplf/isomorphic/utils'
+import { hexToBytes } from '@transia/isomorphic/utils'
 
 /**
  * Variable length encoded type

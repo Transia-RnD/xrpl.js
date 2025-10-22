@@ -1,5 +1,5 @@
 import { Hash160 } from './hash-160'
-import { bytesToHex, hexToBytes, hexToString } from '@xrplf/isomorphic/utils'
+import { bytesToHex, hexToBytes, hexToString } from '@transia/isomorphic/utils'
 import { SerializedTypeID } from './serialized-type'
 
 const XRP_HEX_REGEX = /^0{40}$/

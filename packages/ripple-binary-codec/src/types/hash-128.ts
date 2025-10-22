@@ -1,5 +1,5 @@
 import { Hash } from './hash'
-import { bytesToHex } from '@xrplf/isomorphic/utils'
+import { bytesToHex } from '@transia/isomorphic/utils'
 import { SerializedTypeID } from './serialized-type'
 
 /**

@@ -1,4 +1,4 @@
-import { HEX_REGEX } from '@xrplf/isomorphic/utils'
+import { HEX_REGEX } from '@transia/isomorphic/utils'
 
 import { ValidationError } from '../../errors'
 

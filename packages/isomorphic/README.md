@@ -31,7 +31,7 @@ hash
 
 ### `@xrplf/isomorphic/ripemd160`
 ```typescript
-import { ripemd160 } from '@xrplf/isomorphic/ripemd160';
+import { ripemd160 } from '@transia/isomorphic/ripemd160';
 const hashA = ripemd160('abc');
 const hashB = ripemd160
   .create()
@@ -42,7 +42,7 @@ const hashB = ripemd160
 ### `@xrplf/isomorphic/sha256`
 
 ```typescript
-import { sha256 } from '@xrplf/isomorphic/sha256';
+import { sha256 } from '@transia/isomorphic/sha256';
 const hashA = sha256('abc');
 const hashB = sha256
   .create()
@@ -53,7 +53,7 @@ const hashB = sha256
 ### `@xrplf/isomorphic/sha512`
 
 ```typescript
-import { sha512 } from '@xrplf/isomorphic/sha512';
+import { sha512 } from '@transia/isomorphic/sha512';
 const hashA = sha512('abc');
 const hashB = sha512
   .create()
@@ -118,7 +118,7 @@ console.log(stringToHex('deadbeef֍')) // "6465616462656566D68D"
 ### `@xrplf/isomorphic/ws`
 
 ```typescript
-import WebSocket from '@xrplf/isomorphic/ws'
+import WebSocket from '@transia/isomorphic/ws'
 
 const socket = new WebSocket('wss://localhost:8080')
 ```
