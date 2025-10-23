@@ -335,14 +335,21 @@ class Data extends SerializedType {
         break
 
       case SerializedTypeID.STI_VL:
-        dataValue = Blob.fromParser(parser, parser.readVariableLengthLength())
-        dataBytes = dataValue.toBytes()
+        const valueVL = parser.readVariableLength()
+        dataValue = Blob.from(bytesToHex(valueVL))
+        dataBytes = concat([
+          BinarySerializer.encodeVariableLength(valueVL.length),
+          valueVL,
+        ])
         break
 
       case SerializedTypeID.STI_ACCOUNT:
         parser.skip(1)
         dataValue = AccountID.fromParser(parser)
-        dataBytes = (dataValue as AccountID).toBytes()
+        dataBytes = concat([
+          new Uint8Array([0x14]),
+          (dataValue as AccountID).toBytes(),
+        ])
         break
 
       case SerializedTypeID.STI_AMOUNT:
@@ -419,8 +426,10 @@ class Data extends SerializedType {
       case SerializedTypeID.STI_UINT256:
         return Hash256.fromParser(parser)
       case SerializedTypeID.STI_VL:
-        return Blob.fromParser(parser, parser.size())
+        const vlLength = parser.readVariableLengthLength()
+        return Blob.fromParser(parser, vlLength)
       case SerializedTypeID.STI_ACCOUNT:
+        parser.skip(1)
         return AccountID.fromParser(parser)
       case SerializedTypeID.STI_AMOUNT:
         return Amount.fromParser(parser)
