@@ -711,16 +711,6 @@
       }
     ],
     [
-      "ContractReturnString",
-      {
-        "isSerialized": true,
-        "isSigningField": true,
-        "isVLEncoded": true,
-        "nth": 36,
-        "type": "Blob"
-      }
-    ],
-    [
       "ContractHash",
       {
         "isSerialized": true,
@@ -728,16 +718,6 @@
         "isVLEncoded": false,
         "nth": 37,
         "type": "Hash256"
-      }
-    ],
-    [
-      "ParameterName",
-      {
-        "isSerialized": true,
-        "isSigningField": true,
-        "isVLEncoded": true,
-        "nth": 35,
-        "type": "Blob"
       }
     ],
     [

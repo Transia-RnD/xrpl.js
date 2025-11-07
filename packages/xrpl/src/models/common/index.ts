@@ -262,7 +262,6 @@ export interface ParameterValue {
 export interface Parameter {
   Parameter: {
     ParameterFlag?: number
-    ParameterName?: string
     ParameterType?: ParameterType
     ParameterValue?: ParameterValue
   }
@@ -271,7 +270,6 @@ export interface Parameter {
 export interface InstanceParameter {
   InstanceParameter: {
     ParameterFlag: number
-    ParameterName: string
     ParameterType: ParameterType
   }
 }
