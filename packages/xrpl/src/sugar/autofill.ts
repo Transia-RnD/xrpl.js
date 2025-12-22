@@ -1,6 +1,9 @@
 /* eslint-disable max-lines -- lots of helper functions needed for autofill */
+import {
+  xAddressToClassicAddress,
+  isValidXAddress,
+} from '@transia/ripple-address-codec'
 import BigNumber from 'bignumber.js'
-import { xAddressToClassicAddress, isValidXAddress } from '@transia/ripple-address-codec'
 
 import { type Client } from '..'
 import { ValidationError, XrplError } from '../errors'

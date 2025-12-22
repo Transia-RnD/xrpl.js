@@ -1,4 +1,8 @@
-import { deriveAddress, deriveKeypair, generateSeed } from '@transia/ripple-keypairs'
+import {
+  deriveAddress,
+  deriveKeypair,
+  generateSeed,
+} from '@transia/ripple-keypairs'
 
 import {
   entropyToSecret,

@@ -2,7 +2,6 @@ import { HDKey } from '@scure/bip32'
 import { mnemonicToSeedSync, validateMnemonic } from '@scure/bip39'
 import { wordlist } from '@scure/bip39/wordlists/english'
 import { bytesToHex } from '@transia/isomorphic/utils'
-import BigNumber from 'bignumber.js'
 import {
   classicAddressToXAddress,
   isValidXAddress,
@@ -20,6 +19,7 @@ import {
   generateSeed,
   sign,
 } from '@transia/ripple-keypairs'
+import BigNumber from 'bignumber.js'
 
 import ECDSA from '../ECDSA'
 import { ValidationError } from '../errors'

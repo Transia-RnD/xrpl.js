@@ -173,14 +173,17 @@ export function encodeSeed(
   if (!checkByteLength(entropy, 16)) {
     throw new Error('entropy must have length 16')
   }
+  let versions
+  if (type === 'ed25519') {
+    versions = ED25519_SEED
+  } else if (type === 'dilithium') {
+    versions = [DILITHIUM_SEED]
+  } else {
+    versions = [FAMILY_SEED]
+  }
   const opts = {
     expectedLength: 16,
-    versions:
-      type === 'ed25519'
-        ? ED25519_SEED
-        : type === 'dilithium'
-        ? [DILITHIUM_SEED]
-        : [FAMILY_SEED],
+    versions,
   }
 
   // prefixes entropy with version bytes

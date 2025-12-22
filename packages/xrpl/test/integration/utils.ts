@@ -1,8 +1,8 @@
+import { decode } from '@transia/ripple-binary-codec'
 import BigNumber from 'bignumber.js'
 import { assert } from 'chai'
 import omit from 'lodash/omit'
 import throttle from 'lodash/throttle'
-import { decode } from '@transia/ripple-binary-codec'
 
 import {
   Client,

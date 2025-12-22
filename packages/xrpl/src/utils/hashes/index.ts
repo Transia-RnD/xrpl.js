@@ -4,8 +4,8 @@
    bitwise operators for and-ing numbers with a mask and bit shifting. */
 
 import { bytesToHex } from '@transia/isomorphic/utils'
-import BigNumber from 'bignumber.js'
 import { decodeAccountID } from '@transia/ripple-address-codec'
+import BigNumber from 'bignumber.js'
 
 import hashLedger, {
   hashLedgerHeader,
