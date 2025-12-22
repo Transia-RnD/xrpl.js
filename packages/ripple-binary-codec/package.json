@@ -11,9 +11,9 @@
     "test": "test"
   },
   "dependencies": {
-    "bignumber.js": "^9.0.0",
-    "@transia/isomorphic": "^1.0.1",
-    "@transia/ripple-address-codec": "^5.0.0"
+    "@transia/isomorphic": "^1.0.2-quantum.0",
+    "@transia/ripple-address-codec": "^5.0.1-quantum.0",
+    "bignumber.js": "^9.0.0"
   },
   "scripts": {
     "build": "tsc --build tsconfig.build.json && copyfiles ./src/enums/definitions.json ./dist/enums/",

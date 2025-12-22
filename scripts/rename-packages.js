@@ -95,21 +95,10 @@ function updatePackageJson(packagePath) {
           let version = packageJson[depType][dep];
           const newName = packageMappings[dep] || dep; // Use new name if mapping exists, otherwise keep current
 
-          // Update version to include/replace suffix
-          const hasCaret = version.startsWith('^');
-          const versionNum = version.replace('^', '');
-
-          // Match version pattern: major.minor.patch[-suffix]
-          const versionMatch = versionNum.match(/^(\d+)\.(\d+)\.(\d+)(.*)$/);
-
-          if (versionMatch) {
-            const [, major, minor, patch, existingSuffix] = versionMatch;
-
-            // If there's no suffix or it's different from our target suffix, update it
-            if (!existingSuffix || !existingSuffix.includes(versionSuffix)) {
-              const newPatch = parseInt(patch) + 1;
-              version = `${hasCaret ? '^' : ''}${major}.${minor}.${newPatch}${versionSuffix}`;
-            }
+          // For monorepo internal dependencies, use workspace protocol
+          // This allows npm to resolve them locally before publishing
+          if (!version.startsWith('file:') && !version.startsWith('workspace:')) {
+            version = 'workspace:*';
           }
 
           // Delete old entry and add new one (in case name changed)

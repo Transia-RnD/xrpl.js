@@ -21,8 +21,8 @@
   "dependencies": {
     "@noble/curves": "^1.0.0",
     "@noble/post-quantum": "^0.4.1",
-    "@transia/isomorphic": "^1.0.1",
-    "@transia/ripple-address-codec": "^5.0.0"
+    "@transia/isomorphic": "^1.0.2-quantum.0",
+    "@transia/ripple-address-codec": "^5.0.1-quantum.0"
   },
   "keywords": [
     "ripple",
