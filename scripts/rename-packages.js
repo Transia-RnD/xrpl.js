@@ -35,6 +35,12 @@ const packageMappings = {
   'xrpl': `${targetScope}/xrpl`,
 };
 
+// Create a set of all package names (old and new) for dependency detection
+const allPackageNames = new Set([
+  ...Object.keys(packageMappings),
+  ...Object.values(packageMappings)
+]);
+
 // Get all package directories
 const packagesDir = path.join(__dirname, '../packages');
 const packageDirs = fs.readdirSync(packagesDir)
@@ -60,11 +66,21 @@ function updatePackageJson(packagePath) {
   }
 
   // Update version with suffix
-  if (packageJson.version && !packageJson.version.includes('alpha')) {
-    const [major, minor, patch] = packageJson.version.split('.');
-    const newPatch = parseInt(patch) + 1;
-    packageJson.version = `${major}.${minor}.${newPatch}${versionSuffix}`;
-    console.log(`  ✓ Version: ${originalName} → ${packageJson.version}`);
+  if (packageJson.version) {
+    const currentVersion = packageJson.version;
+    // Match version pattern: major.minor.patch[-suffix]
+    const versionMatch = currentVersion.match(/^(\d+)\.(\d+)\.(\d+)(.*)$/);
+
+    if (versionMatch) {
+      const [, major, minor, patch, existingSuffix] = versionMatch;
+
+      // If there's no suffix or it's different from our target suffix, update it
+      if (!existingSuffix || !existingSuffix.includes(versionSuffix)) {
+        const newPatch = parseInt(patch) + 1;
+        packageJson.version = `${major}.${minor}.${newPatch}${versionSuffix}`;
+        console.log(`  ✓ Version: ${originalName} ${currentVersion} → ${packageJson.version}`);
+      }
+    }
   }
 
   // Update dependencies
@@ -72,11 +88,38 @@ function updatePackageJson(packagePath) {
   depTypes.forEach(depType => {
     if (packageJson[depType]) {
       Object.keys(packageJson[depType]).forEach(dep => {
-        if (packageMappings[dep]) {
-          const version = packageJson[depType][dep];
-          delete packageJson[depType][dep];
-          packageJson[depType][packageMappings[dep]] = version;
-          console.log(`  ✓ Dependency: ${dep} → ${packageMappings[dep]}`);
+        // Check if this is one of our packages (either old or new name)
+        const isOurPackage = packageMappings[dep] || allPackageNames.has(dep);
+
+        if (isOurPackage) {
+          let version = packageJson[depType][dep];
+          const newName = packageMappings[dep] || dep; // Use new name if mapping exists, otherwise keep current
+
+          // Update version to include/replace suffix
+          const hasCaret = version.startsWith('^');
+          const versionNum = version.replace('^', '');
+
+          // Match version pattern: major.minor.patch[-suffix]
+          const versionMatch = versionNum.match(/^(\d+)\.(\d+)\.(\d+)(.*)$/);
+
+          if (versionMatch) {
+            const [, major, minor, patch, existingSuffix] = versionMatch;
+
+            // If there's no suffix or it's different from our target suffix, update it
+            if (!existingSuffix || !existingSuffix.includes(versionSuffix)) {
+              const newPatch = parseInt(patch) + 1;
+              version = `${hasCaret ? '^' : ''}${major}.${minor}.${newPatch}${versionSuffix}`;
+            }
+          }
+
+          // Delete old entry and add new one (in case name changed)
+          if (dep !== newName) {
+            delete packageJson[depType][dep];
+            console.log(`  ✓ Dependency: ${dep} → ${newName} (${version})`);
+          } else if (version !== packageJson[depType][dep]) {
+            console.log(`  ✓ Dependency version: ${dep} → ${version}`);
+          }
+          packageJson[depType][newName] = version;
         }
       });
     }
