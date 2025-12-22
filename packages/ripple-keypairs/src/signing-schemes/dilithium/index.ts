@@ -1,5 +1,5 @@
 import { ml_dsa44 } from '@noble/post-quantum/ml-dsa.js'
-import { bytesToHex } from '@xrplf/isomorphic/utils'
+import { bytesToHex } from '@transia/isomorphic/utils'
 import Sha512 from '../../utils/Sha512'
 
 import type { HexString, SigningScheme } from '../../types'

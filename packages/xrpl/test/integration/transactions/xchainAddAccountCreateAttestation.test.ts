@@ -1,5 +1,5 @@
-import { encode } from 'ripple-binary-codec'
-import { sign } from 'ripple-keypairs'
+import { encode } from '@transia/ripple-binary-codec'
+import { sign } from '@transia/ripple-keypairs'
 
 import {
   Wallet,

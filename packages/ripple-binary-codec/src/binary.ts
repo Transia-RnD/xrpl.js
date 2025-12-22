@@ -1,6 +1,6 @@
 /* eslint-disable func-style */
 
-import { bytesToHex } from '@xrplf/isomorphic/utils'
+import { bytesToHex } from '@transia/isomorphic/utils'
 import { coreTypes } from './types'
 import { BinaryParser } from './serdes/binary-parser'
 import { AccountID } from './types/account-id'

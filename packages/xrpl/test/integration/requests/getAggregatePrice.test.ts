@@ -1,4 +1,4 @@
-import { stringToHex } from '@xrplf/isomorphic/utils'
+import { stringToHex } from '@transia/isomorphic/utils'
 import { assert } from 'chai'
 
 import { OracleSet } from '../../../src'

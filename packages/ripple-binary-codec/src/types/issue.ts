@@ -1,4 +1,4 @@
-import { concat } from '@xrplf/isomorphic/utils'
+import { concat } from '@transia/isomorphic/utils'
 import { BinaryParser } from '../serdes/binary-parser'
 
 import { AccountID } from './account-id'

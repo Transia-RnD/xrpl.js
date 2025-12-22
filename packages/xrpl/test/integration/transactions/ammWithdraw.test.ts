@@ -1,6 +1,6 @@
 /* eslint-disable max-statements -- necessary for readibility */
 import { assert } from 'chai'
-import { AMMWithdraw, AMMWithdrawFlags } from 'xrpl'
+import { AMMWithdraw, AMMWithdrawFlags } from '@transia/xrpl'
 
 import { AMMInfoResponse } from '../../../src'
 import serverUrl from '../serverUrl'

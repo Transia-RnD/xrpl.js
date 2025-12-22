@@ -1,4 +1,4 @@
-import { decode } from 'ripple-binary-codec'
+import { decode } from '@transia/ripple-binary-codec'
 
 import { NFToken } from '../models/ledger/NFTokenPage'
 import {

@@ -1,4 +1,4 @@
-import { stringToHex } from '@xrplf/isomorphic/utils'
+import { stringToHex } from '@transia/isomorphic/utils'
 
 import { validateOracleSet } from '../../src/models/transactions/oracleSet'
 import { assertTxIsValid, assertTxValidationError } from '../testUtils'

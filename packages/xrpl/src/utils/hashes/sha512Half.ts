@@ -1,5 +1,5 @@
-import { sha512 } from '@xrplf/isomorphic/sha512'
-import { bytesToHex, hexToBytes } from '@xrplf/isomorphic/utils'
+import { sha512 } from '@transia/isomorphic/sha512'
+import { bytesToHex, hexToBytes } from '@transia/isomorphic/utils'
 
 const HASH_BYTES = 32
 

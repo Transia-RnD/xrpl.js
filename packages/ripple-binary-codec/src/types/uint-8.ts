@@ -1,6 +1,6 @@
 import { UInt } from './uint'
 import { BinaryParser } from '../serdes/binary-parser'
-import { bytesToHex } from '@xrplf/isomorphic/utils'
+import { bytesToHex } from '@transia/isomorphic/utils'
 import { writeUInt8 } from '../utils'
 
 /**

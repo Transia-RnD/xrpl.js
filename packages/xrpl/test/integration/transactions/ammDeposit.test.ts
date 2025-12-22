@@ -1,6 +1,6 @@
 /* eslint-disable max-statements -- necessary for readibility */
 import { assert } from 'chai'
-import { AMMDeposit, AMMDepositFlags } from 'xrpl'
+import { AMMDeposit, AMMDepositFlags } from '@transia/xrpl'
 
 import { AMMInfoResponse } from '../../../src'
 import serverUrl from '../serverUrl'

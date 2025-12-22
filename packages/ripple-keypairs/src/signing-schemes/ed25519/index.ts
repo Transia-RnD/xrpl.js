@@ -1,5 +1,5 @@
 import { ed25519 as nobleEd25519 } from '@noble/curves/ed25519'
-import { bytesToHex } from '@xrplf/isomorphic/utils'
+import { bytesToHex } from '@transia/isomorphic/utils'
 
 import type { HexString, SigningScheme } from '../../types'
 import assert from '../../utils/assert'

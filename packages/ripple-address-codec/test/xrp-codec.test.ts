@@ -1,4 +1,4 @@
-import { bytesToHex, hexToBytes, stringToHex } from '@xrplf/isomorphic/utils'
+import { bytesToHex, hexToBytes, stringToHex } from '@transia/isomorphic/utils'
 
 import {
   codec,

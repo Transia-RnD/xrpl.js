@@ -3,7 +3,7 @@ import { BinaryParser } from '../serdes/binary-parser'
 import { AccountID } from './account-id'
 import { JsonObject, SerializedType } from './serialized-type'
 import { Issue, IssueObject } from './issue'
-import { concat } from '@xrplf/isomorphic/utils'
+import { concat } from '@transia/isomorphic/utils'
 
 /**
  * Interface for JSON objects that represent cross-chain bridges

@@ -240,7 +240,7 @@ class Client extends EventEmitter<EventTypes> {
    *
    * @example
    * ```ts
-   * import { Client } from "xrpl"
+   * import { Client } from "@transia/xrpl"
    * const client = new Client('wss://s.altnet.rippletest.net:51233')
    * ```
    */
@@ -513,7 +513,7 @@ class Client extends EventEmitter<EventTypes> {
    * @returns void
    * @example
    * ```ts
-   * const { Client } = require('xrpl')
+   * const { Client } = require('@transia/xrpl')
    * const client = new Client('wss://s.altnet.rippletest.net:51233')
    * await client.getServerInfo()
    * console.log(client.networkID)
@@ -541,7 +541,7 @@ class Client extends EventEmitter<EventTypes> {
    * Client.connect() establishes a connection between a Client object and the server.
    *
    * ```ts
-   * const { Client } = require('xrpl')
+   * const { Client } = require('@transia/xrpl')
    * const client = new Client('wss://s.altnet.rippletest.net:51233')
    * await client.connect()
    * // do something with the client
@@ -554,7 +554,7 @@ class Client extends EventEmitter<EventTypes> {
    *
    * @example
    * ```ts
-   * const { Client } = require('xrpl')
+   * const { Client } = require('@transia/xrpl')
    * const client = new Client('wss://s.altnet.rippletest.net:51233')
    * await client.connect()
    * // do something with the client
@@ -578,7 +578,7 @@ class Client extends EventEmitter<EventTypes> {
    * To use the disconnect() method, you first need to create a new Client object and connect it to a server:
    *
    * ```ts
-   * const { Client } = require('xrpl')
+   * const { Client } = require('@transia/xrpl')
    * const client = new Client('wss://s.altnet.rippletest.net:51233')
    * await client.connect()
    * // do something with the client
@@ -603,7 +603,7 @@ class Client extends EventEmitter<EventTypes> {
    * @category Network
    * @example
    * ```ts
-   * const { Client } = require('xrpl')
+   * const { Client } = require('@transia/xrpl')
    * const client = new Client('wss://s.altnet.rippletest.net:51233')
    * await client.connect()
    * console.log(client.isConnected())
@@ -628,7 +628,7 @@ class Client extends EventEmitter<EventTypes> {
    * @example
    *
    * ```ts
-   * const { Client } = require('xrpl')
+   * const { Client } = require('@transia/xrpl')
    *
    * const client = new Client('wss://s.altnet.rippletest.net:51233')
    *
@@ -753,7 +753,7 @@ class Client extends EventEmitter<EventTypes> {
    *
    * @example
    * ```ts
-   * const { Client, Wallet } = require('xrpl')
+   * const { Client, Wallet } = require('@transia/xrpl')
    * const client = new Client('wss://s.altnet.rippletest.net:51233')
    * await client.connect()
    * const wallet = Wallet.generate()
@@ -792,7 +792,7 @@ class Client extends EventEmitter<EventTypes> {
    * @example
    *
    * ```ts
-   * const { Client, Wallet } = require('xrpl')
+   * const { Client, Wallet } = require('@transia/xrpl')
    * const client = new Client('wss://s.altnet.rippletest.net:51233')
    *
    * async function submitTransaction() {
@@ -938,7 +938,7 @@ class Client extends EventEmitter<EventTypes> {
    *
    * @example
    * ```ts
-   * const { Client } = require('xrpl')
+   * const { Client } = require('@transia/xrpl')
    * const client = new Client('wss://s.altnet.rippletest.net:51233')
    * await client.connect()
    *
@@ -1099,7 +1099,7 @@ class Client extends EventEmitter<EventTypes> {
    *
    * @example
    * ```ts
-   * const { Client } = require('xrpl')
+   * const { Client } = require('@transia/xrpl')
    * const client = new Client('wss://s.altnet.rippletest.net:51233')
    * await client.connect()
    * const ledgerIndex = await client.getLedgerIndex()
@@ -1124,7 +1124,7 @@ class Client extends EventEmitter<EventTypes> {
    * @example
    *
    * Example 1: Fund a randomly generated wallet
-   * const { Client, Wallet } = require('xrpl')
+   * const { Client, Wallet } = require('@transia/xrpl')
    *
    * const client = new Client('wss://s.altnet.rippletest.net:51233')
    * await client.connect()
@@ -1204,7 +1204,7 @@ class Client extends EventEmitter<EventTypes> {
       destination: walletToFund.classicAddress,
       xrpAmount: options.amount,
       usageContext: options.usageContext,
-      userAgent: 'xrpl.js',
+      userAgent: '@transia/xrpl.js',
     }
 
     let startingBalance = 0

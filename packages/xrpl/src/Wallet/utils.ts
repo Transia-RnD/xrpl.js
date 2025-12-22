@@ -1,7 +1,7 @@
-import { bytesToHex } from '@xrplf/isomorphic/utils'
+import { bytesToHex } from '@transia/isomorphic/utils'
 import BigNumber from 'bignumber.js'
-import { decodeAccountID } from 'ripple-address-codec'
-import { decode, encode } from 'ripple-binary-codec'
+import { decodeAccountID } from '@transia/ripple-address-codec'
+import { decode, encode } from '@transia/ripple-binary-codec'
 
 import { Transaction } from '../models'
 

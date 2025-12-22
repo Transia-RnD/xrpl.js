@@ -1,5 +1,5 @@
 import { assert } from 'chai'
-import { isValidClassicAddress } from 'xrpl'
+import { isValidClassicAddress } from '@transia/xrpl'
 
 import { AMMInfoResponse } from '../../../src'
 import serverUrl from '../serverUrl'

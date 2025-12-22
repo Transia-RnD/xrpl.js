@@ -2,13 +2,13 @@ import { hexOnly } from './utils'
 import { coreTypes, Amount, Hash160 } from '../src/types'
 import BigNumber from 'bignumber.js'
 
-import { encodeAccountID } from 'ripple-address-codec'
+import { encodeAccountID } from '@transia/ripple-address-codec'
 import { Field, TransactionType } from '../src/enums'
 import { makeParser, readJSON } from '../src/binary'
 import { BytesList } from '../src/serdes/binary-serializer'
 import fixtures from './fixtures/data-driven-tests.json'
 
-const { bytesToHex } = require('@xrplf/isomorphic/utils')
+const { bytesToHex } = require('@transia/isomorphic/utils')
 
 function toJSON(v) {
   return v.toJSON ? v.toJSON() : v

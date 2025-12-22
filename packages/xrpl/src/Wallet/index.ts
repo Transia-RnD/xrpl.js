@@ -1,25 +1,25 @@
 import { HDKey } from '@scure/bip32'
 import { mnemonicToSeedSync, validateMnemonic } from '@scure/bip39'
 import { wordlist } from '@scure/bip39/wordlists/english'
-import { bytesToHex } from '@xrplf/isomorphic/utils'
+import { bytesToHex } from '@transia/isomorphic/utils'
 import BigNumber from 'bignumber.js'
 import {
   classicAddressToXAddress,
   isValidXAddress,
   xAddressToClassicAddress,
   encodeSeed,
-} from 'ripple-address-codec'
+} from '@transia/ripple-address-codec'
 import {
   encodeForSigning,
   encodeForMultisigning,
   encode,
-} from 'ripple-binary-codec'
+} from '@transia/ripple-binary-codec'
 import {
   deriveAddress,
   deriveKeypair,
   generateSeed,
   sign,
-} from 'ripple-keypairs'
+} from '@transia/ripple-keypairs'
 
 import ECDSA from '../ECDSA'
 import { ValidationError } from '../errors'
@@ -137,7 +137,7 @@ export class Wallet {
    *
    * @example
    * ```ts
-   * const { Wallet } = require('xrpl')
+   * const { Wallet } = require('@transia/xrpl')
    * const wallet = Wallet.generate()
    * ```
    *
@@ -322,7 +322,7 @@ export class Wallet {
    * @example
    *
    * ```ts
-   * const { Client, Wallet } = require('xrpl')
+   * const { Client, Wallet } = require('@transia/xrpl')
    * const client = new Client('wss://s.altnet.rippletest.net:51233')
    *
    * async function signTransaction() {

@@ -4,7 +4,7 @@ import { AccountID } from './account-id'
 import { Currency } from './currency'
 import { JsonObject, SerializedType } from './serialized-type'
 import BigNumber from 'bignumber.js'
-import { bytesToHex, concat, hexToBytes } from '@xrplf/isomorphic/utils'
+import { bytesToHex, concat, hexToBytes } from '@transia/isomorphic/utils'
 import { readUInt32BE, writeUInt32BE } from '../utils'
 import { Hash192 } from './hash-192'
 

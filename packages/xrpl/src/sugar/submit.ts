@@ -34,7 +34,7 @@ async function sleep(ms: number): Promise<void> {
  * @throws {ValidationError} If the signed transaction is not valid (not signed).
  *
  * @example
- * import { Client } from "xrpl"
+ * import { Client } from "@transia/xrpl"
  * const client = new Client("wss://s.altnet.rippletest.net:51233");
  * await client.connect();
  * const signedTransaction = createSignedTransaction();
@@ -81,7 +81,7 @@ export async function submitRequest(
  * @throws {XrplError} If the latest ledger sequence surpasses the transaction's lastLedgerSequence.
  *
  * @example
- * import { hashes, Client } from "xrpl"
+ * import { hashes, Client } from "@transia/xrpl"
  * const client = new Client("wss://s.altnet.rippletest.net:51233")
  * await client.connect()
  *
@@ -205,8 +205,8 @@ function isSigned(transaction: SubmittableTransaction | string): boolean {
  * @throws {ValidationError} If the transaction is not signed and no wallet is provided.
  *
  * @example
- * import { Client } from "xrpl"
- * import { encode } from "ripple-binary-codec"
+ * import { Client } from "@transia/xrpl"
+ * import { encode } from "@transia/ripple-binary-codec"
  *
  * const client = new Client("wss://s.altnet.rippletest.net:51233");
  * await client.connect():
