@@ -8,6 +8,8 @@ import {
   decodeAccountID,
   encodeNodePublic,
   decodeNodePublic,
+  encodeNodePrivate,
+  decodeNodePrivate,
   encodeAccountPublic,
   decodeAccountPublic,
   isValidClassicAddress,
@@ -166,6 +168,10 @@ export {
   encodeNodePublic,
   // Decode an XRP Ledger node public key into its raw bytes
   decodeNodePublic,
+  // Encode bytes to XRP Ledger node private key format
+  encodeNodePrivate,
+  // Decode an XRP Ledger node private key into its raw bytes
+  decodeNodePrivate,
   // Encode a public key, as for payment channels
   encodeAccountPublic,
   // Decode a public key, as for payment channels

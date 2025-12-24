@@ -115,7 +115,8 @@ class Codec {
     if (!checkByteLength(bytes, expectedLength)) {
       throw new Error(
         'unexpected_payload_length: bytes.length does not match expectedLength.' +
-          ' Ensure that the bytes are a Uint8Array.',
+          ' Ensure that the bytes are a Uint8Array.' +
+          ` Got ${bytes.length} Expected ${expectedLength}`,
       )
     }
     return this.encodeChecked(concatArgs(versions, bytes))
@@ -150,6 +151,8 @@ const ACCOUNT_PUBLIC_KEY = 0x23
 const FAMILY_SEED = 0x21
 // 28; Validation public key (33 bytes)
 const NODE_PUBLIC = 0x1c
+// 32; Validation private key (32 bytes for ed25519, 2560 bytes for dilithium)
+const NODE_PRIVATE = 0x20
 
 // [1, 225, 75]
 const ED25519_SEED = [0x01, 0xe1, 0x4b]
@@ -231,23 +234,51 @@ export function decodeAccountID(accountId: string): Uint8Array {
 export const decodeAddress = decodeAccountID
 /* eslint-enable import/no-unused-modules */
 
-export function decodeNodePublic(base58string: string): Uint8Array {
-  const opts = { versions: [NODE_PUBLIC], expectedLength: 33 }
+export function decodeNodePublic(
+  base58string: string,
+  expectedLength?: number,
+): Uint8Array {
+  const opts = { versions: [NODE_PUBLIC], expectedLength }
   return codecWithXrpAlphabet.decode(base58string, opts).bytes
 }
 
-export function encodeNodePublic(bytes: ByteArray): string {
-  const opts = { versions: [NODE_PUBLIC], expectedLength: 33 }
+export function encodeNodePublic(
+  bytes: ByteArray,
+  expectedLength: number = 33,
+): string {
+  const opts = { versions: [NODE_PUBLIC], expectedLength }
   return codecWithXrpAlphabet.encode(bytes, opts)
 }
 
-export function encodeAccountPublic(bytes: ByteArray): string {
-  const opts = { versions: [ACCOUNT_PUBLIC_KEY], expectedLength: 33 }
+export function encodeAccountPublic(
+  bytes: ByteArray,
+  expectedLength: number = 33,
+): string {
+  const opts = { versions: [ACCOUNT_PUBLIC_KEY], expectedLength }
   return codecWithXrpAlphabet.encode(bytes, opts)
 }
 
-export function decodeAccountPublic(base58string: string): Uint8Array {
-  const opts = { versions: [ACCOUNT_PUBLIC_KEY], expectedLength: 33 }
+export function decodeAccountPublic(
+  base58string: string,
+  expectedLength?: number,
+): Uint8Array {
+  const opts = { versions: [ACCOUNT_PUBLIC_KEY], expectedLength }
+  return codecWithXrpAlphabet.decode(base58string, opts).bytes
+}
+
+export function encodeNodePrivate(
+  bytes: ByteArray,
+  expectedLength: number,
+): string {
+  const opts = { versions: [NODE_PRIVATE], expectedLength }
+  return codecWithXrpAlphabet.encode(bytes, opts)
+}
+
+export function decodeNodePrivate(
+  base58string: string,
+  expectedLength?: number,
+): Uint8Array {
+  const opts = { versions: [NODE_PRIVATE], expectedLength }
   return codecWithXrpAlphabet.decode(base58string, opts).bytes
 }
 
