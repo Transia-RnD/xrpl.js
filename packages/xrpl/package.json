@@ -30,7 +30,8 @@
     "@transia/ripple-keypairs": "^2.0.4-alpha.0",
     "@transia/secret-numbers": "^2.0.4-alpha.0",
     "bignumber.js": "^9.0.0",
-    "eventemitter3": "^5.0.1"
+    "eventemitter3": "^5.0.1",
+    "fast-json-stable-stringify": "^2.1.0"
   },
   "devDependencies": {
     "@types/node": "^18.18.38",
@@ -43,7 +44,7 @@
     "lodash": "^4.17.4",
     "react": "^19.0.0",
     "run-s": "^0.0.0",
-    "typedoc": "0.28.5",
+    "typedoc": "0.28.15",
     "ws": "^8.14.2"
   },
   "scripts": {

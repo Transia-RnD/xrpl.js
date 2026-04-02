@@ -30,7 +30,7 @@ class UInt16 extends UInt {
       return val
     }
 
-    if (typeof val === 'number') {
+    if (typeof val === 'number' && Number.isInteger(val)) {
       UInt16.checkUintRange(val, 0, 0xffff)
 
       const buf = new Uint8Array(UInt16.width)
@@ -38,7 +38,7 @@ class UInt16 extends UInt {
       return new UInt16(buf)
     }
 
-    throw new Error('Can not construct UInt16 with given value')
+    throw new Error('Cannot construct UInt16 from given value')
   }
 
   /**
