@@ -3705,7 +3705,6 @@
     "VaultSet": 66,
     "VaultWithdraw": 69,
     "XChainAccountCreateCommit": 44,
-    "XChainAddAccountCreateAttestation": 46,
     "XChainAddClaimAttestation": 45,
     "XChainClaim": 43,
     "XChainCommit": 42,
