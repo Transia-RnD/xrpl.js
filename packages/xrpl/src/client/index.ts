@@ -694,7 +694,7 @@ class Client extends EventEmitter<EventTypes> {
     if (tx.TransactionType === 'Payment' && tx.DeliverMax != null) {
       handleDeliverMax(tx)
     }
-    if (tx.TransactionType === 'ContractCall') {
+    if (tx.TransactionType === 'ContractCall' && !tx.ComputationAllowance) {
       promises.push(getComputationAllowance(this, tx))
     }
 
