@@ -1,6 +1,6 @@
 {
   "name": "@transia/ripple-address-codec",
-  "version": "5.0.4-5.0.4-alpha.0.0",
+  "version": "5.0.4-5.0.4-alpha.0.1",
   "description": "encodes/decodes base58 encoded XRP Ledger identifiers",
   "files": [
     "dist/*",
@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@scure/base": "^1.1.3",
-    "@transia/isomorphic": "^1.0.5-1.0.5-alpha.0.0"
+    "@transia/isomorphic": "^1.0.5-1.0.5-alpha.0.1"
   },
   "keywords": [
     "ripple",
@@ -36,5 +36,5 @@
   "engines": {
     "node": ">= 18"
   },
-  "gitHead": "d3695888a1d42f4f10291dfb2ac50bbcd5497f13"
+  "gitHead": "889e288a68731cc5d93e0e292116a11b2268258b"
 }

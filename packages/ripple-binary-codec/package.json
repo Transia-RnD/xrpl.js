@@ -1,6 +1,6 @@
 {
   "name": "@transia/ripple-binary-codec",
-  "version": "2.5.5-alpha.1",
+  "version": "2.5.5-alpha.2",
   "description": "XRP Ledger binary codec",
   "files": [
     "dist/*",
@@ -11,8 +11,8 @@
     "test": "test"
   },
   "dependencies": {
-    "@transia/isomorphic": "^1.0.5-1.0.5-alpha.0.0",
-    "@transia/ripple-address-codec": "^5.0.4-5.0.4-alpha.0.0",
+    "@transia/isomorphic": "^1.0.5-1.0.5-alpha.0.1",
+    "@transia/ripple-address-codec": "^5.0.4-5.0.4-alpha.0.1",
     "bignumber.js": "^9.0.0"
   },
   "scripts": {
@@ -44,5 +44,5 @@
   "engines": {
     "node": ">= 18"
   },
-  "gitHead": "d3695888a1d42f4f10291dfb2ac50bbcd5497f13"
+  "gitHead": "889e288a68731cc5d93e0e292116a11b2268258b"
 }

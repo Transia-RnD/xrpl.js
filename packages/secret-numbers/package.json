@@ -1,6 +1,6 @@
 {
   "name": "@transia/secret-numbers",
-  "version": "2.0.4-2.0.4-alpha.0.0",
+  "version": "2.0.4-2.0.4-alpha.0.1",
   "description": "Generate XRPL Accounts with a number-based secret: 8 chunks of 6 digits",
   "main": "dist/index.js",
   "unpkg": "build/xrplf-secret-numbers-latest-min.js",
@@ -29,8 +29,8 @@
     "test": "test"
   },
   "dependencies": {
-    "@transia/isomorphic": "^1.0.5-1.0.5-alpha.0.0",
-    "@transia/ripple-keypairs": "^2.0.4-2.0.4-alpha.0.0"
+    "@transia/isomorphic": "^1.0.5-1.0.5-alpha.0.1",
+    "@transia/ripple-keypairs": "^2.0.4-2.0.4-alpha.0.1"
   },
   "prettier": "@xrplf/prettier-config",
   "repository": {
@@ -45,7 +45,7 @@
     "multi sign",
     "sign"
   ],
-  "gitHead": "d3695888a1d42f4f10291dfb2ac50bbcd5497f13",
+  "gitHead": "889e288a68731cc5d93e0e292116a11b2268258b",
   "publishConfig": {
     "access": "public"
   }

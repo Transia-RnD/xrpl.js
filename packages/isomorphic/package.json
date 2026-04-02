@@ -1,6 +1,6 @@
 {
   "name": "@transia/isomorphic",
-  "version": "1.0.5-1.0.5-alpha.0.0",
+  "version": "1.0.5-1.0.5-alpha.0.1",
   "description": "A collection of isomorphic and tree-shakeable crypto hashes and utils for xrpl.js",
   "keywords": [
     "crypto",
@@ -45,5 +45,5 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "gitHead": "d3695888a1d42f4f10291dfb2ac50bbcd5497f13"
+  "gitHead": "889e288a68731cc5d93e0e292116a11b2268258b"
 }
