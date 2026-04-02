@@ -8,7 +8,7 @@ import { makeParser, readJSON } from '../src/binary'
 import { BytesList } from '../src/serdes/binary-serializer'
 import fixtures from './fixtures/data-driven-tests.json'
 
-const { bytesToHex } = require('@xrplf/isomorphic/utils')
+const { bytesToHex } = require('@transia/isomorphic/utils')
 
 function toJSON(v) {
   return v.toJSON ? v.toJSON() : v

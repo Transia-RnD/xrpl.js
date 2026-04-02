@@ -1,9 +1,19 @@
-import { bytesToHex } from '@transia/isomorphic/utils'
-import BigNumber from 'bignumber.js'
-import { decodeAccountID } from '@transia/ripple-address-codec'
-import { decode, encode } from '@transia/ripple-binary-codec'
+import { bytesToHex } from "@transia/isomorphic/utils";
+import BigNumber from "bignumber.js";
+import {
+  decodeAccountID,
+  isValidXAddress,
+  xAddressToClassicAddress,
+} from "@transia/ripple-address-codec";
+import {
+  decode,
+  encode,
+  encodeForMultisigning,
+  encodeForSigning,
+} from "@transia/ripple-binary-codec";
+import { sign } from "@transia/ripple-keypairs";
 
-import { Transaction } from '../models'
+import { Transaction } from "../models";
 
 /**
  * If presented in binary form, the Signers array must be sorted based on
@@ -13,18 +23,28 @@ import { Transaction } from '../models'
  *
  * @param left - A Signer to compare with.
  * @param right - A second Signer to compare with.
- * @returns 1 if left \> right, 0 if left = right, -1 if left \< right, and null if left or right are NaN.
+ * @returns 1 if left \> right, 0 if left = right, -1 if left \< right.
+ * @throws Error if either Account is null, undefined, or invalid.
  */
 export function compareSigners<T extends { Account: string }>(
   left: T,
   right: T,
 ): number {
-  return addressToBigNumber(left.Account).comparedTo(
+  if (!left.Account || !right.Account) {
+    throw new Error("compareSigners: Account cannot be null or undefined");
+  }
+  const result = addressToBigNumber(left.Account).comparedTo(
     addressToBigNumber(right.Account),
-  )
+  );
+  if (result === null) {
+    throw new Error(
+      "compareSigners: Invalid account address comparison resulted in NaN",
+    );
+  }
+  return result;
 }
 
-export const NUM_BITS_IN_HEX = 16
+export const NUM_BITS_IN_HEX = 16;
 
 /**
  * Converts an address to a BigNumber.
@@ -33,8 +53,8 @@ export const NUM_BITS_IN_HEX = 16
  * @returns A BigNumber representing the address.
  */
 export function addressToBigNumber(address: string): BigNumber {
-  const hex = bytesToHex(decodeAccountID(address))
-  return new BigNumber(hex, NUM_BITS_IN_HEX)
+  const hex = bytesToHex(decodeAccountID(address));
+  return new BigNumber(hex, NUM_BITS_IN_HEX);
 }
 
 /**
@@ -47,12 +67,36 @@ export function addressToBigNumber(address: string): BigNumber {
 export function getDecodedTransaction(
   txOrBlob: Transaction | string,
 ): Transaction {
-  if (typeof txOrBlob === 'object') {
+  if (typeof txOrBlob === "object") {
     // We need this to handle X-addresses in multisigning
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- We are casting here to get strong typing
-    return decode(encode(txOrBlob)) as unknown as Transaction
+    return decode(encode(txOrBlob)) as unknown as Transaction;
   }
 
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- We are casting here to get strong typing
-  return decode(txOrBlob) as unknown as Transaction
+  return decode(txOrBlob) as unknown as Transaction;
+}
+
+/**
+ * Signs a transaction with the proper signing encoding.
+ *
+ * @param tx - A transaction to sign.
+ * @param privateKey - A key to sign the transaction with.
+ * @param signAs - Multisign only. An account address to include in the Signer field.
+ * Can be either a classic address or an XAddress.
+ * @returns A signed transaction in the proper format.
+ */
+export function computeSignature(
+  tx: Transaction,
+  privateKey: string,
+  signAs?: string,
+): string {
+  if (signAs) {
+    const classicAddress = isValidXAddress(signAs)
+      ? xAddressToClassicAddress(signAs).classicAddress
+      : signAs;
+
+    return sign(encodeForMultisigning(tx, classicAddress), privateKey);
+  }
+  return sign(encodeForSigning(tx), privateKey);
 }
