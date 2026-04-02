@@ -1,4 +1,5 @@
 import { Parameter } from '../common'
+
 import {
   BaseTransaction,
   // isNumber,
@@ -14,7 +15,8 @@ import {
 export interface ContractCall extends BaseTransaction {
   TransactionType: 'ContractCall'
 
-  ComputationAllowance: number
+  // Optional beacuse autofill will add it if missing
+  ComputationAllowance?: number
 
   ContractAccount: string
 

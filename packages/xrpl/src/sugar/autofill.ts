@@ -423,6 +423,7 @@ export async function getComputationAllowance(
   tx: Transaction,
 ): Promise<void> {
   const copyTx = { ...tx }
+  copyTx.ComputationAllowance = 100000000000
   delete copyTx.SigningPubKey
   const tx_blob = encode(copyTx)
   // eslint-disable-next-line require-atomic-updates, no-param-reassign -- ignore
