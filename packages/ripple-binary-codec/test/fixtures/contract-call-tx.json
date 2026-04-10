@@ -9,7 +9,7 @@
       "Parameter": {
         "ParameterFlag": 0,
         "ParameterValue": {
-          "type": "UINT8",
+          "type": "UInt8",
           "value": 255
         }
       }
@@ -18,7 +18,7 @@
       "Parameter": {
         "ParameterFlag": 0,
         "ParameterValue": {
-          "type": "UINT16",
+          "type": "UInt16",
           "value": 65535
         }
       }
@@ -27,7 +27,7 @@
       "Parameter": {
         "ParameterFlag": 0,
         "ParameterValue": {
-          "type": "UINT32",
+          "type": "UInt32",
           "value": 4294967295
         }
       }
@@ -36,7 +36,7 @@
       "Parameter": {
         "ParameterFlag": 0,
         "ParameterValue": {
-          "type": "UINT64",
+          "type": "UInt64",
           "value": "7FFFFFFFFFFFFFFF"
         }
       }
@@ -45,7 +45,7 @@
       "Parameter": {
         "ParameterFlag": 0,
         "ParameterValue": {
-          "type": "UINT128",
+          "type": "Hash128",
           "value": "00000000000000000000000000000001"
         }
       }
@@ -54,7 +54,7 @@
       "Parameter": {
         "ParameterFlag": 0,
         "ParameterValue": {
-          "type": "UINT160",
+          "type": "Hash160",
           "value": "0000000000000000000000000000000000000001"
         }
       }
@@ -63,7 +63,7 @@
       "Parameter": {
         "ParameterFlag": 0,
         "ParameterValue": {
-          "type": "UINT192",
+          "type": "Hash192",
           "value": "000000000000000000000000000000000000000000000001"
         }
       }
@@ -72,7 +72,7 @@
       "Parameter": {
         "ParameterFlag": 0,
         "ParameterValue": {
-          "type": "UINT256",
+          "type": "Hash256",
           "value": "D955DAC2E77519F05AD151A5D3C99FC8125FB39D58FF9F106F1ACA4491902C25"
         }
       }
@@ -81,7 +81,7 @@
       "Parameter": {
         "ParameterFlag": 0,
         "ParameterValue": {
-          "type": "VL",
+          "type": "Blob",
           "value": "DEADBEEF"
         }
       }
@@ -90,7 +90,7 @@
       "Parameter": {
         "ParameterFlag": 0,
         "ParameterValue": {
-          "type": "ACCOUNT",
+          "type": "AccountID",
           "value": "rG1QQv2nh2gr7RCZ1P8YYcBUKCCN633jCn"
         }
       }
@@ -99,7 +99,7 @@
       "Parameter": {
         "ParameterFlag": 0,
         "ParameterValue": {
-          "type": "AMOUNT",
+          "type": "Amount",
           "value": "1000000"
         }
       }
@@ -108,7 +108,7 @@
       "Parameter": {
         "ParameterFlag": 0,
         "ParameterValue": {
-          "type": "AMOUNT",
+          "type": "Amount",
           "value": {
             "currency": "USD",
             "issuer": "rExKpRKXNz25UAjbckCRtQsJFcSfjL9Er3",
@@ -121,7 +121,7 @@
       "Parameter": {
         "ParameterFlag": 0,
         "ParameterValue": {
-          "type": "NUMBER",
+          "type": "Number",
           "value": "1.2"
         }
       }

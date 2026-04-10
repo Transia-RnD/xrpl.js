@@ -23,8 +23,8 @@ interface DataTypeJSON extends JsonObject {
  * the inner type.
  *
  * Usage:
- *   DataType.from({ type: "AMOUNT" })
- *   DataType.from("UINT64")
+ *   DataType.from({ type: "Amount" })
+ *   DataType.from("UInt64")
  *   DataType.fromParser(parser)
  */
 class DataType extends SerializedType {
@@ -64,7 +64,7 @@ class DataType extends SerializedType {
    * @param value - Can be:
    *   - DataType instance (returns as-is)
    *   - DataTypeJSON object with 'type' field
-   *   - String type name (e.g., "AMOUNT", "UINT64")
+   *   - String type name (e.g., "Amount", "UInt64")
    *   - SerializedTypeID enum value
    * @returns DataType instance
    * @throws Error if value type is not supported or type string is unknown
@@ -95,7 +95,7 @@ class DataType extends SerializedType {
   /**
    * Construct from a type string
    *
-   * @param typeStr - Type string like "AMOUNT", "UINT64", etc.
+   * @param typeStr - Type string like "Amount", "UInt64", etc.
    * @returns DataType instance
    * @throws Error if type string is not recognized
    */
