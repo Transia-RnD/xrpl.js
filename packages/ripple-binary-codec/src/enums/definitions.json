@@ -3337,7 +3337,7 @@
         "isSigningField": true,
         "isVLEncoded": false,
         "nth": 1,
-        "type": "Datatype"
+        "type": "DataType"
       }
     ],
     [
@@ -3719,7 +3719,7 @@
     "Blob": 7,
     "Currency": 26,
     "Data": 27,
-    "Datatype": 28,
+    "DataType": 28,
     "Done": -1,
     "Hash128": 4,
     "Hash160": 17,

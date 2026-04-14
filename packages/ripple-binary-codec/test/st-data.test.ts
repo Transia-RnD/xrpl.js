@@ -5,197 +5,197 @@ import { coreTypes } from '../src/types'
 const { Data } = coreTypes
 
 describe('Data Type with all STTypes', () => {
-  describe('UINT8', () => {
-    it('should encode and decode UINT8', () => {
-      const data = Data.from({ type: 'UINT8', value: 255 })
+  describe('UInt8', () => {
+    it('should encode and decode UInt8', () => {
+      const data = Data.from({ type: 'UInt8', value: 255 })
       const hex = data.toHex()
-      expect(hex).toBe('0010FF') // 0010 = type ID for UINT8, FF = 255
+      expect(hex).toBe('0010FF') // 0010 = type ID for UInt8, FF = 255
 
       const parser = new BinaryParser(hex)
       const parsed = Data.fromParser(parser)
-      expect(parsed.toJSON()).toEqual({ type: 'UINT8', value: 255 })
+      expect(parsed.toJSON()).toEqual({ type: 'UInt8', value: 255 })
     })
 
-    it('should handle UINT8 zero', () => {
-      const data = Data.from({ type: 'UINT8', value: 0 })
+    it('should handle UInt8 zero', () => {
+      const data = Data.from({ type: 'UInt8', value: 0 })
       expect(data.toHex()).toBe('001000')
-      expect(data.toJSON()).toEqual({ type: 'UINT8', value: 0 })
+      expect(data.toJSON()).toEqual({ type: 'UInt8', value: 0 })
     })
 
-    it('should handle UINT8 from string', () => {
-      const data = Data.from({ type: 'UINT8', value: '128' })
+    it('should handle UInt8 from string', () => {
+      const data = Data.from({ type: 'UInt8', value: '128' })
       expect(data.toHex()).toBe('001080')
-      expect(data.toJSON()).toEqual({ type: 'UINT8', value: 128 })
+      expect(data.toJSON()).toEqual({ type: 'UInt8', value: 128 })
     })
   })
 
-  describe('UINT16', () => {
-    it('should encode and decode UINT16', () => {
-      const data = Data.from({ type: 'UINT16', value: 65535 })
+  describe('UInt16', () => {
+    it('should encode and decode UInt16', () => {
+      const data = Data.from({ type: 'UInt16', value: 65535 })
       const hex = data.toHex()
-      expect(hex).toBe('0001FFFF') // 0001 = type ID for UINT16, FFFF = 65535
+      expect(hex).toBe('0001FFFF') // 0001 = type ID for UInt16, FFFF = 65535
 
       const parser = new BinaryParser(hex)
       const parsed = Data.fromParser(parser)
-      expect(parsed.toJSON()).toEqual({ type: 'UINT16', value: 65535 })
+      expect(parsed.toJSON()).toEqual({ type: 'UInt16', value: 65535 })
     })
 
-    it('should handle UINT16 zero', () => {
-      const data = Data.from({ type: 'UINT16', value: 0 })
+    it('should handle UInt16 zero', () => {
+      const data = Data.from({ type: 'UInt16', value: 0 })
       expect(data.toHex()).toBe('00010000')
     })
   })
 
-  describe('UINT32', () => {
-    it('should encode and decode UINT32', () => {
-      const data = Data.from({ type: 'UINT32', value: 4294967295 })
+  describe('UInt32', () => {
+    it('should encode and decode UInt32', () => {
+      const data = Data.from({ type: 'UInt32', value: 4294967295 })
       const hex = data.toHex()
-      expect(hex).toBe('0002FFFFFFFF') // 0002 = type ID for UINT32
+      expect(hex).toBe('0002FFFFFFFF') // 0002 = type ID for UInt32
 
       const parser = new BinaryParser(hex)
       const parsed = Data.fromParser(parser)
-      expect(parsed.toJSON()).toEqual({ type: 'UINT32', value: 4294967295 })
+      expect(parsed.toJSON()).toEqual({ type: 'UInt32', value: 4294967295 })
     })
   })
 
-  describe('UINT64', () => {
-    it('should encode and decode UINT64', () => {
-      const data = Data.from({ type: 'UINT64', value: '7fffffffffffffff' })
+  describe('UInt64', () => {
+    it('should encode and decode UInt64', () => {
+      const data = Data.from({ type: 'UInt64', value: '7fffffffffffffff' })
       const hex = data.toHex()
-      expect(hex).toBe('00037FFFFFFFFFFFFFFF') // 0003 = type ID for UINT64
+      expect(hex).toBe('00037FFFFFFFFFFFFFFF') // 0003 = type ID for UInt64
 
       const parser = new BinaryParser(hex)
       const parsed = Data.fromParser(parser)
       expect(parsed.toJSON()).toEqual({
-        type: 'UINT64',
+        type: 'UInt64',
         value: '7FFFFFFFFFFFFFFF',
       })
     })
 
-    // it('should handle UINT64 as number string', () => {
-    //   const data = Data.from({ type: 'UINT64', value: '123456789' })
+    // it('should handle UInt64 as number string', () => {
+    //   const data = Data.from({ type: 'UInt64', value: '123456789' })
     //   const parser = new BinaryParser(data.toHex())
     //   const parsed = Data.fromParser(parser)
     //   expect(parsed.getValue().toJSON()).toBe('123456789')
     // })
   })
 
-  describe('UINT128 (Hash128)', () => {
-    it('should encode and decode UINT128', () => {
+  describe('Hash128', () => {
+    it('should encode and decode Hash128', () => {
       const value = '00000000000000000000000000000001'
-      const data = Data.from({ type: 'UINT128', value })
+      const data = Data.from({ type: 'Hash128', value })
       const hex = data.toHex()
-      expect(hex).toBe('0004' + value) // 0004 = type ID for UINT128
+      expect(hex).toBe('0004' + value) // 0004 = type ID for Hash128
 
       const parser = new BinaryParser(hex)
       const parsed = Data.fromParser(parser)
       expect(parsed.toJSON()).toEqual({
-        type: 'UINT128',
+        type: 'Hash128',
         value: value.toUpperCase(),
       })
     })
   })
 
-  describe('UINT160 (Hash160)', () => {
-    it('should encode and decode UINT160', () => {
+  describe('Hash160', () => {
+    it('should encode and decode Hash160', () => {
       const value = '0000000000000000000000000000000000000001'
-      const data = Data.from({ type: 'UINT160', value })
+      const data = Data.from({ type: 'Hash160', value })
       const hex = data.toHex()
-      expect(hex).toBe('0011' + value) // 0011 = type ID for UINT160
+      expect(hex).toBe('0011' + value) // 0011 = type ID for Hash160
 
       const parser = new BinaryParser(hex)
       const parsed = Data.fromParser(parser)
       expect(parsed.toJSON()).toEqual({
-        type: 'UINT160',
+        type: 'Hash160',
         value: value.toUpperCase(),
       })
     })
   })
 
-  describe('UINT192 (Hash192)', () => {
-    it('should encode and decode UINT192', () => {
+  describe('Hash192', () => {
+    it('should encode and decode Hash192', () => {
       const value = '000000000000000000000000000000000000000000000001'
-      const data = Data.from({ type: 'UINT192', value })
+      const data = Data.from({ type: 'Hash192', value })
       const hex = data.toHex()
-      expect(hex).toBe('0015' + value) // 0015 = type ID for UINT192
+      expect(hex).toBe('0015' + value) // 0015 = type ID for Hash192
 
       const parser = new BinaryParser(hex)
       const parsed = Data.fromParser(parser)
       expect(parsed.toJSON()).toEqual({
-        type: 'UINT192',
+        type: 'Hash192',
         value: value.toUpperCase(),
       })
     })
   })
 
-  describe('UINT256 (Hash256)', () => {
-    it('should encode and decode UINT256', () => {
+  describe('Hash256', () => {
+    it('should encode and decode Hash256', () => {
       const value =
         'D955DAC2E77519F05AD151A5D3C99FC8125FB39D58FF9F106F1ACA4491902C25'
-      const data = Data.from({ type: 'UINT256', value })
+      const data = Data.from({ type: 'Hash256', value })
       const hex = data.toHex()
-      expect(hex).toBe('0005' + value) // 0005 = type ID for UINT256
+      expect(hex).toBe('0005' + value) // 0005 = type ID for Hash256
 
       const parser = new BinaryParser(hex)
       const parsed = Data.fromParser(parser)
-      expect(parsed.toJSON()).toEqual({ type: 'UINT256', value })
+      expect(parsed.toJSON()).toEqual({ type: 'Hash256', value })
     })
   })
 
-  describe('VL (Variable Length Blob)', () => {
-    it('should encode and decode VL with hex string', () => {
+  describe('Blob (Variable Length)', () => {
+    it('should encode and decode Blob with hex string', () => {
       const value = 'DEADBEEF'
-      const data = Data.from({ type: 'VL', value })
+      const data = Data.from({ type: 'Blob', value })
       const hex = data.toHex()
 
-      // VL encoding: type ID (0007) + length prefix (04 for 4 bytes) + data
+      // Blob encoding: type ID (0007) + length prefix (04 for 4 bytes) + data
       expect(hex).toBe('000704DEADBEEF')
 
       const parser = new BinaryParser(hex)
       const parsed = Data.fromParser(parser)
-      expect(parsed.toJSON()).toEqual({ type: 'VL', value })
+      expect(parsed.toJSON()).toEqual({ type: 'Blob', value })
     })
 
-    it('should handle empty VL', () => {
-      const data = Data.from({ type: 'VL', value: '' })
+    it('should handle empty Blob', () => {
+      const data = Data.from({ type: 'Blob', value: '' })
       const hex = data.toHex()
       expect(hex).toBe('000700') // 00 = length 0
 
       const parser = new BinaryParser(hex)
       const parsed = Data.fromParser(parser)
-      expect(parsed.toJSON()).toEqual({ type: 'VL', value: '' })
+      expect(parsed.toJSON()).toEqual({ type: 'Blob', value: '' })
     })
 
-    it('should handle longer VL data', () => {
+    it('should handle longer Blob data', () => {
       const value = 'DEADBEEFCAFE' + '00'.repeat(100) // Long hex string
-      const data = Data.from({ type: 'VL', value })
+      const data = Data.from({ type: 'Blob', value })
       const parser = new BinaryParser(data.toHex())
       const parsed = Data.fromParser(parser)
-      expect(parsed.toJSON()).toEqual({ type: 'VL', value })
+      expect(parsed.toJSON()).toEqual({ type: 'Blob', value })
     })
   })
 
-  describe('ACCOUNT', () => {
-    it('should encode and decode ACCOUNT', () => {
+  describe('AccountID', () => {
+    it('should encode and decode AccountID', () => {
       const value = 'rG1QQv2nh2gr7RCZ1P8YYcBUKCCN633jCn'
-      const data = Data.from({ type: 'ACCOUNT', value })
+      const data = Data.from({ type: 'AccountID', value })
       const hex = data.toHex()
 
-      // ACCOUNT encoding: type ID (0008) + (14) + 20 bytes of account ID
+      // AccountID encoding: type ID (0008) + (14) + 20 bytes of account ID
       expect(hex.substring(0, 4)).toBe('0008')
       expect(hex.length).toBe(6 + 40) // 2 bytes type + 1 byte length + 20 bytes account
 
       const parser = new BinaryParser(hex)
       const parsed = Data.fromParser(parser)
-      expect(parsed.toJSON()).toEqual({ type: 'ACCOUNT', value })
+      expect(parsed.toJSON()).toEqual({ type: 'AccountID', value })
     })
 
     it('should handle different account format', () => {
       const value = 'rExKpRKXNz25UAjbckCRtQsJFcSfjL9Er3'
-      const data = Data.from({ type: 'ACCOUNT', value })
+      const data = Data.from({ type: 'AccountID', value })
       const parser = new BinaryParser(data.toHex())
       const parsed = Data.fromParser(parser)
-      expect(parsed.toJSON()).toEqual({ type: 'ACCOUNT', value })
+      expect(parsed.toJSON()).toEqual({ type: 'AccountID', value })
     })
   })
 
@@ -283,51 +283,51 @@ describe('Data Type with all STTypes', () => {
   //   })
   // })
 
-  describe('NUMBER (STNumber)', () => {
-    it('should encode and decode positive decimal NUMBER', () => {
+  describe('Number (STNumber)', () => {
+    it('should encode and decode positive decimal Number', () => {
       const value = '1.2'
-      const data = Data.from({ type: 'NUMBER', value })
+      const data = Data.from({ type: 'Number', value })
       const hex = data.toHex()
 
-      // NUMBER encoding: type ID (0009) + serialized number
+      // Number encoding: type ID (0009) + serialized number
       expect(hex.substring(0, 4)).toBe('0009')
 
       const parser = new BinaryParser(hex)
       const parsed = Data.fromParser(parser)
-      expect(parsed.toJSON()).toEqual({ type: 'NUMBER', value })
+      expect(parsed.toJSON()).toEqual({ type: 'Number', value })
     })
 
-    it('should handle integer NUMBER', () => {
+    it('should handle integer Number', () => {
       const value = '123456789'
-      const data = Data.from({ type: 'NUMBER', value })
+      const data = Data.from({ type: 'Number', value })
       const parser = new BinaryParser(data.toHex())
       const parsed = Data.fromParser(parser)
-      expect(parsed.toJSON()).toEqual({ type: 'NUMBER', value })
+      expect(parsed.toJSON()).toEqual({ type: 'Number', value })
     })
 
-    it('should handle negative NUMBER', () => {
+    it('should handle negative Number', () => {
       const value = '-987.654'
-      const data = Data.from({ type: 'NUMBER', value })
+      const data = Data.from({ type: 'Number', value })
       const parser = new BinaryParser(data.toHex())
       const parsed = Data.fromParser(parser)
-      expect(parsed.toJSON()).toEqual({ type: 'NUMBER', value })
+      expect(parsed.toJSON()).toEqual({ type: 'Number', value })
     })
 
-    it('should handle zero NUMBER', () => {
+    it('should handle zero Number', () => {
       const value = '0'
-      const data = Data.from({ type: 'NUMBER', value })
+      const data = Data.from({ type: 'Number', value })
       const parser = new BinaryParser(data.toHex())
       const parsed = Data.fromParser(parser)
-      expect(parsed.toJSON()).toEqual({ type: 'NUMBER', value })
+      expect(parsed.toJSON()).toEqual({ type: 'Number', value })
     })
 
-    it('should handle scientific notation NUMBER', () => {
+    it('should handle scientific notation Number', () => {
       const value = '1.23e5'
-      const data = Data.from({ type: 'NUMBER', value })
+      const data = Data.from({ type: 'Number', value })
       const parser = new BinaryParser(data.toHex())
       const parsed = Data.fromParser(parser)
       // STNumber normalizes scientific notation to decimal
-      expect(parsed.toJSON()).toEqual({ type: 'NUMBER', value: '123000' })
+      expect(parsed.toJSON()).toEqual({ type: 'Number', value: '123000' })
     })
   })
 

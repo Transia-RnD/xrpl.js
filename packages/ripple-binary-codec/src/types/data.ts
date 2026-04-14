@@ -65,8 +65,8 @@ type DataValue =
  * It's encoded as a 2-byte type ID followed by the serialized data.
  *
  * Usage:
- *   Data.from({ type: "AMOUNT", value: "1000000" })
- *   Data.from({ type: "UINT64", value: "123456789" })
+ *   Data.from({ type: "Amount", value: "1000000" })
+ *   Data.from({ type: "UInt64", value: "123456789" })
  *   Data.fromParser(parser)
  */
 class Data extends SerializedType {
