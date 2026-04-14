@@ -2,6 +2,7 @@ import { BytesList } from '../serdes/binary-serializer'
 import { BinaryParser } from '../serdes/binary-parser'
 import { XrplDefinitionsBase } from '../enums'
 import { bytesToHex } from '@transia/isomorphic/utils'
+import definitions from '../enums/definitions.json'
 
 /**
  * Enum for SerializedTypeID values used in XRPL
@@ -41,111 +42,28 @@ export enum SerializedTypeID {
 }
 
 /**
- * Map of type strings to SerializedTypeID values
+ * Maps built dynamically from definitions.json TYPES.
+ * This ensures type string names (e.g. "Hash256", "Hash128") stay in sync
+ * with the canonical definitions rather than using hardcoded uppercase variants.
  */
-export const TYPE_STRING_TO_ID: Record<string, SerializedTypeID> = {
-  NOTPRESENT: SerializedTypeID.STI_NOTPRESENT,
-  UINT16: SerializedTypeID.STI_UINT16,
-  UINT32: SerializedTypeID.STI_UINT32,
-  UINT64: SerializedTypeID.STI_UINT64,
-  UINT128: SerializedTypeID.STI_UINT128,
-  UINT256: SerializedTypeID.STI_UINT256,
-  AMOUNT: SerializedTypeID.STI_AMOUNT,
-  VL: SerializedTypeID.STI_VL,
-  ACCOUNT: SerializedTypeID.STI_ACCOUNT,
-  NUMBER: SerializedTypeID.STI_NUMBER,
-  INT32: SerializedTypeID.STI_INT32,
-  INT64: SerializedTypeID.STI_INT64,
 
-  OBJECT: SerializedTypeID.STI_OBJECT,
-  ARRAY: SerializedTypeID.STI_ARRAY,
+// Map of type name strings to SerializedTypeID values
+export const TYPE_STRING_TO_ID: Record<string, SerializedTypeID> = {}
 
-  UINT8: SerializedTypeID.STI_UINT8,
-  UINT160: SerializedTypeID.STI_UINT160,
-  PATHSET: SerializedTypeID.STI_PATHSET,
-  VECTOR256: SerializedTypeID.STI_VECTOR256,
-  UINT96: SerializedTypeID.STI_UINT96,
-  UINT192: SerializedTypeID.STI_UINT192,
-  UINT384: SerializedTypeID.STI_UINT384,
-  UINT512: SerializedTypeID.STI_UINT512,
-  ISSUE: SerializedTypeID.STI_ISSUE,
-  XCHAIN_BRIDGE: SerializedTypeID.STI_XCHAIN_BRIDGE,
-  CURRENCY: SerializedTypeID.STI_CURRENCY,
-  DATA: SerializedTypeID.STI_DATA,
-  DATATYPE: SerializedTypeID.STI_DATATYPE,
-  JSON: SerializedTypeID.STI_JSON,
-}
+// Map of numeric type codes to SerializedTypeID values
+export const TYPE_NUMBER_TO_ID: Record<number, SerializedTypeID> = {}
 
-/**
- * Map of type strings to SerializedTypeID values
- */
-export const TYPE_NUMBER_TO_ID: Record<number, SerializedTypeID> = {
-  0: SerializedTypeID.STI_NOTPRESENT,
-  1: SerializedTypeID.STI_UINT16,
-  2: SerializedTypeID.STI_UINT32,
-  3: SerializedTypeID.STI_UINT64,
-  4: SerializedTypeID.STI_UINT128,
-  5: SerializedTypeID.STI_UINT256,
-  6: SerializedTypeID.STI_AMOUNT,
-  7: SerializedTypeID.STI_VL,
-  8: SerializedTypeID.STI_ACCOUNT,
-  9: SerializedTypeID.STI_NUMBER,
-  10: SerializedTypeID.STI_INT32,
-  11: SerializedTypeID.STI_INT64,
+// Map of SerializedTypeID values to type name strings
+export const TYPE_ID_TO_STRING: Record<number, string> = {}
 
-  14: SerializedTypeID.STI_OBJECT,
-  15: SerializedTypeID.STI_ARRAY,
-
-  16: SerializedTypeID.STI_UINT8,
-  17: SerializedTypeID.STI_UINT160,
-  18: SerializedTypeID.STI_PATHSET,
-  19: SerializedTypeID.STI_VECTOR256,
-  20: SerializedTypeID.STI_UINT96,
-  21: SerializedTypeID.STI_UINT192,
-  22: SerializedTypeID.STI_UINT384,
-  23: SerializedTypeID.STI_UINT512,
-  24: SerializedTypeID.STI_ISSUE,
-  25: SerializedTypeID.STI_XCHAIN_BRIDGE,
-  26: SerializedTypeID.STI_CURRENCY,
-  27: SerializedTypeID.STI_DATA,
-  28: SerializedTypeID.STI_DATATYPE,
-  29: SerializedTypeID.STI_JSON,
-}
-
-/**
- * Map of SerializedTypeID values to type strings
- */
-export const TYPE_ID_TO_STRING: Record<SerializedTypeID, string> = {
-  [SerializedTypeID.STI_NOTPRESENT]: '',
-  [SerializedTypeID.STI_UINT16]: 'UINT16',
-  [SerializedTypeID.STI_UINT32]: 'UINT32',
-  [SerializedTypeID.STI_UINT64]: 'UINT64',
-  [SerializedTypeID.STI_UINT128]: 'UINT128',
-  [SerializedTypeID.STI_UINT256]: 'UINT256',
-  [SerializedTypeID.STI_AMOUNT]: 'AMOUNT',
-  [SerializedTypeID.STI_VL]: 'VL',
-  [SerializedTypeID.STI_ACCOUNT]: 'ACCOUNT',
-  [SerializedTypeID.STI_NUMBER]: 'NUMBER',
-  [SerializedTypeID.STI_INT32]: 'INT32',
-  [SerializedTypeID.STI_INT64]: 'INT64',
-
-  [SerializedTypeID.STI_OBJECT]: 'OBJECT',
-  [SerializedTypeID.STI_ARRAY]: 'ARRAY',
-
-  [SerializedTypeID.STI_UINT8]: 'UINT8',
-  [SerializedTypeID.STI_UINT160]: 'UINT160',
-  [SerializedTypeID.STI_PATHSET]: 'PATHSET',
-  [SerializedTypeID.STI_VECTOR256]: 'VECTOR256',
-  [SerializedTypeID.STI_UINT96]: 'UINT96',
-  [SerializedTypeID.STI_UINT192]: 'UINT192',
-  [SerializedTypeID.STI_UINT384]: 'UINT384',
-  [SerializedTypeID.STI_UINT512]: 'UINT512',
-  [SerializedTypeID.STI_ISSUE]: 'ISSUE',
-  [SerializedTypeID.STI_XCHAIN_BRIDGE]: 'XCHAIN_BRIDGE',
-  [SerializedTypeID.STI_CURRENCY]: 'CURRENCY',
-  [SerializedTypeID.STI_DATA]: 'DATA',
-  [SerializedTypeID.STI_DATATYPE]: 'DATATYPE',
-  [SerializedTypeID.STI_JSON]: 'JSON',
+// Populate all three maps from definitions.json TYPES
+for (const [name, id] of Object.entries(definitions.TYPES)) {
+  if (id >= 0) {
+    const typeId = id as SerializedTypeID
+    TYPE_STRING_TO_ID[name] = typeId
+    TYPE_NUMBER_TO_ID[id] = typeId
+    TYPE_ID_TO_STRING[typeId] = name
+  }
 }
 
 type JSON = string | number | boolean | null | undefined | JSON[] | JsonObject

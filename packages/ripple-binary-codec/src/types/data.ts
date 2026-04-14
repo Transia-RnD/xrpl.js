@@ -65,8 +65,8 @@ type DataValue =
  * It's encoded as a 2-byte type ID followed by the serialized data.
  *
  * Usage:
- *   Data.from({ type: "AMOUNT", value: "1000000" })
- *   Data.from({ type: "UINT64", value: "123456789" })
+ *   Data.from({ type: "Amount", value: "1000000" })
+ *   Data.from({ type: "UInt64", value: "123456789" })
  *   Data.fromParser(parser)
  */
 class Data extends SerializedType {
@@ -134,8 +134,8 @@ class Data extends SerializedType {
           typeof json.value === 'string'
             ? parseInt(json.value, 10)
             : typeof json.value === 'number'
-            ? json.value
-            : Number(json.value)
+              ? json.value
+              : Number(json.value)
         if (
           typeof val !== 'number' ||
           Number.isNaN(val) ||
@@ -154,8 +154,8 @@ class Data extends SerializedType {
           typeof json.value === 'string'
             ? parseInt(json.value, 10)
             : typeof json.value === 'number'
-            ? json.value
-            : Number(json.value)
+              ? json.value
+              : Number(json.value)
         if (
           typeof val !== 'number' ||
           Number.isNaN(val) ||
@@ -174,8 +174,8 @@ class Data extends SerializedType {
           typeof json.value === 'string'
             ? parseInt(json.value, 10)
             : typeof json.value === 'number'
-            ? json.value
-            : Number(json.value)
+              ? json.value
+              : Number(json.value)
         dataValue = UInt32.from(val)
         dataBytes = (dataValue as UInt32).toBytes()
         break
