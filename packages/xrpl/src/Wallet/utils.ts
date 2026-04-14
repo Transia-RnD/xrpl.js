@@ -100,27 +100,3 @@ export function computeSignature(
   }
   return sign(encodeForSigning(tx), privateKey)
 }
-
-/**
- * Signs a transaction with the proper signing encoding.
- *
- * @param tx - A transaction to sign.
- * @param privateKey - A key to sign the transaction with.
- * @param signAs - Multisign only. An account address to include in the Signer field.
- * Can be either a classic address or an XAddress.
- * @returns A signed transaction in the proper format.
- */
-export function computeSignature(
-  tx: Transaction,
-  privateKey: string,
-  signAs?: string,
-): string {
-  if (signAs) {
-    const classicAddress = isValidXAddress(signAs)
-      ? xAddressToClassicAddress(signAs).classicAddress
-      : signAs
-
-    return sign(encodeForMultisigning(tx, classicAddress), privateKey)
-  }
-  return sign(encodeForSigning(tx), privateKey)
-}

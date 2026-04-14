@@ -15,7 +15,7 @@ import {
 export interface ContractCall extends BaseTransaction {
   TransactionType: 'ContractCall'
 
-  // Optional beacuse autofill will add it if missing
+  // Optional because autofill will add it if missing
   ComputationAllowance?: number
 
   ContractAccount: string

@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 
 import { validate, ValidationError } from '../../src'
-import { validateContractClawback } from '../../src/models/transactions/ContractClawback'
+import { validateContractClawback } from '../../src/models/transactions/contractClawback'
 
 /**
  * ContractClawback Transaction Verification Testing.
@@ -12,7 +12,9 @@ describe('ContractClawback', function () {
   let tx
 
   beforeEach(function () {
-    tx = { /* TODO: add sample transaction */ } as any
+    tx = {
+      /* TODO: add sample transaction */
+    } as any
   })
 
   it('verifies valid ContractClawback', function () {
@@ -20,7 +22,7 @@ describe('ContractClawback', function () {
     assert.doesNotThrow(() => validate(tx))
   })
 
-  it("throws w/ missing Amount", function () {
+  it('throws w/ missing Amount', function () {
     delete tx.Amount
 
     assert.throws(
@@ -36,7 +38,7 @@ describe('ContractClawback', function () {
   })
 
   it('throws w/ invalid Amount', function () {
-    tx.Amount = {"currency":"ETH"}
+    tx.Amount = { currency: 'ETH' }
 
     assert.throws(
       () => validateContractClawback(tx),

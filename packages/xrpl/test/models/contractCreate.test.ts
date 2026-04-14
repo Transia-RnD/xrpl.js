@@ -1,7 +1,7 @@
 import { assert } from 'chai'
 
 import { validate, ValidationError } from '../../src'
-import { validateContractCreate } from '../../src/models/transactions/ContractCreate'
+import { validateContractCreate } from '../../src/models/transactions/contractCreate'
 
 /**
  * ContractCreate Transaction Verification Testing.
@@ -12,7 +12,9 @@ describe('ContractCreate', function () {
   let tx
 
   beforeEach(function () {
-    tx = { /* TODO: add sample transaction */ } as any
+    tx = {
+      /* TODO: add sample transaction */
+    } as any
   })
 
   it('verifies valid ContractCreate', function () {
@@ -51,13 +53,14 @@ describe('ContractCreate', function () {
   })
 
   it('throws w/ invalid Functions', function () {
-    tx.Functions = /*TODO*/
+    tx.Functions =
+      /*TODO*/
 
-    assert.throws(
-      () => validateContractCreate(tx),
-      ValidationError,
-      'ContractCreate: invalid field Functions',
-    )
+      assert.throws(
+        () => validateContractCreate(tx),
+        ValidationError,
+        'ContractCreate: invalid field Functions',
+      )
     assert.throws(
       () => validate(tx),
       ValidationError,
@@ -66,13 +69,14 @@ describe('ContractCreate', function () {
   })
 
   it('throws w/ invalid InstanceParameters', function () {
-    tx.InstanceParameters = /*TODO*/
+    tx.InstanceParameters =
+      /*TODO*/
 
-    assert.throws(
-      () => validateContractCreate(tx),
-      ValidationError,
-      'ContractCreate: invalid field InstanceParameters',
-    )
+      assert.throws(
+        () => validateContractCreate(tx),
+        ValidationError,
+        'ContractCreate: invalid field InstanceParameters',
+      )
     assert.throws(
       () => validate(tx),
       ValidationError,
@@ -81,13 +85,14 @@ describe('ContractCreate', function () {
   })
 
   it('throws w/ invalid InstanceParameterValues', function () {
-    tx.InstanceParameterValues = /*TODO*/
+    tx.InstanceParameterValues =
+      /*TODO*/
 
-    assert.throws(
-      () => validateContractCreate(tx),
-      ValidationError,
-      'ContractCreate: invalid field InstanceParameterValues',
-    )
+      assert.throws(
+        () => validateContractCreate(tx),
+        ValidationError,
+        'ContractCreate: invalid field InstanceParameterValues',
+      )
     assert.throws(
       () => validate(tx),
       ValidationError,

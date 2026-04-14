@@ -1,5 +1,5 @@
 const { quality } = require('../src/coretypes')
-const { bytesToHex } = require('@transia/isomorphic/utils')
+const { bytesToHex } = require('@xrplf/isomorphic/utils')
 
 describe('Quality encode/decode', function () {
   const bookDirectory =
