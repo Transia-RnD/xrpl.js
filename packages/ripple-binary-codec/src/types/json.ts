@@ -1,5 +1,4 @@
 /* eslint-disable max-lines */
-/* eslint-disable complexity */
 import { BinaryParser } from '../serdes/binary-parser'
 import { JsonObject, SerializedType, SerializedTypeID } from './serialized-type'
 import { bytesToHex } from '@xrplf/isomorphic/utils'
@@ -28,7 +27,7 @@ class STJson extends SerializedType {
 
   private data: Map<string, SerializedType | null> | (SerializedType | null)[]
   private jsonType: number
-  private default_: boolean = false
+  private default_ = false
 
   /**
    * Construct STJson from bytes
@@ -38,6 +37,21 @@ class STJson extends SerializedType {
     super(bytes)
     this.data = new Map()
     this.jsonType = STJson.JsonType.Object
+  }
+
+  /**
+   * Create an empty STJson with the given type
+   */
+  private static createEmpty(
+    type: number,
+    initialData?:
+      | Map<string, SerializedType | null>
+      | (SerializedType | null)[],
+  ): STJson {
+    const json = new STJson(new Uint8Array())
+    json.data = initialData ?? (type === STJson.JsonType.Array ? [] : new Map())
+    json.jsonType = type
+    return json
   }
 
   /**
@@ -245,9 +259,7 @@ class STJson extends SerializedType {
     let nestedObj = map.get(key)
 
     if (!nestedObj || !(nestedObj instanceof STJson) || !nestedObj.isObject()) {
-      const newNested = new STJson(new Uint8Array())
-      ;(newNested as any).data = new Map()
-      ;(newNested as any).jsonType = STJson.JsonType.Object
+      const newNested = STJson.createEmpty(STJson.JsonType.Object)
       map.set(key, newNested as SerializedType)
       nestedObj = newNested
     }
@@ -358,9 +370,7 @@ class STJson extends SerializedType {
 
     let element = array[index]
     if (!element || !(element instanceof STJson) || !element.isObject()) {
-      const newElement = new STJson(new Uint8Array())
-      ;(newElement as any).data = new Map()
-      ;(newElement as any).jsonType = STJson.JsonType.Object
+      const newElement = STJson.createEmpty(STJson.JsonType.Object)
       array[index] = newElement as SerializedType
       element = newElement
     }
@@ -421,9 +431,7 @@ class STJson extends SerializedType {
     let arrayJson = map.get(key)
 
     if (!arrayJson || !(arrayJson instanceof STJson) || !arrayJson.isArray()) {
-      const newArray = new STJson(new Uint8Array())
-      ;(newArray as any).data = []
-      ;(newArray as any).jsonType = STJson.JsonType.Array
+      const newArray = STJson.createEmpty(STJson.JsonType.Array)
       map.set(key, newArray as SerializedType)
       arrayJson = newArray
     }
@@ -436,6 +444,7 @@ class STJson extends SerializedType {
   /**
    * Set a field within a nested array element
    */
+  // eslint-disable-next-line max-params -- all 4 params are needed to address a nested array element field
   setNestedArrayElementField(
     key: string,
     index: number,
@@ -452,9 +461,7 @@ class STJson extends SerializedType {
     let arrayJson = map.get(key)
 
     if (!arrayJson || !(arrayJson instanceof STJson) || !arrayJson.isArray()) {
-      const newArray = new STJson(new Uint8Array())
-      ;(newArray as any).data = []
-      ;(newArray as any).jsonType = STJson.JsonType.Array
+      const newArray = STJson.createEmpty(STJson.JsonType.Array)
       map.set(key, newArray as SerializedType)
       arrayJson = newArray
     }
@@ -570,7 +577,9 @@ class STJson extends SerializedType {
   toJSON(): JsonObject | JsonObject[] {
     if (this.isArray()) {
       const array = this.data as (SerializedType | null)[]
-      return array.map((item) => (item ? item.toJSON() : null)) as JsonObject[]
+      return array.map((item) => {
+        return item ? item.toJSON() : null
+      }) as JsonObject[]
     } else {
       // isObject()
       const map = this.data as Map<string, SerializedType | null>
@@ -578,7 +587,7 @@ class STJson extends SerializedType {
       for (const [key, value] of map.entries()) {
         result[key] = value ? value.toJSON() : null
       }
-      return result as JsonObject
+      return result
     }
   }
 
@@ -626,8 +635,8 @@ class STJson extends SerializedType {
     if (!(v instanceof STJson)) {
       throw new Error('setValue: value must be STJson')
     }
-    ;(this as any).data = (v as any).data
-    ;(this as any).jsonType = (v as any).jsonType
+    this.data = v.data
+    this.jsonType = v.jsonType
   }
 
   /**
