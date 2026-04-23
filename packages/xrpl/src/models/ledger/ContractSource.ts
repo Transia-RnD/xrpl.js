@@ -8,8 +8,7 @@ import { BaseLedgerEntry, HasPreviousTxnID } from './BaseLedgerEntry'
  * @category Ledger Entries
  */
 export default interface ContractSource
-  extends BaseLedgerEntry,
-    HasPreviousTxnID {
+  extends BaseLedgerEntry, HasPreviousTxnID {
   LedgerEntryType: 'ContractSource'
   /** The hash of the contract. */
   ContractHash: string

@@ -10,8 +10,7 @@ import { BaseRequest, BaseResponse, LookupByLedgerRequest } from './baseMethod'
  * @category Requests
  */
 export interface ContractInfoRequest
-  extends BaseRequest,
-    LookupByLedgerRequest {
+  extends BaseRequest, LookupByLedgerRequest {
   command: 'contract_info'
   /** A unique identifier for the contract, most commonly the contract's address. */
   contract_account: string

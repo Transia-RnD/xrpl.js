@@ -6,8 +6,7 @@ import { BaseLedgerEntry, HasPreviousTxnID } from './BaseLedgerEntry'
  * @category Ledger Entries
  */
 export default interface ContractData
-  extends BaseLedgerEntry,
-    HasPreviousTxnID {
+  extends BaseLedgerEntry, HasPreviousTxnID {
   LedgerEntryType: 'ContractData'
   /** The owner node for this contract data. */
   OwnerNode: string
