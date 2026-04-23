@@ -2,9 +2,10 @@ import { Function, InstanceParameter, InstanceParameterValue } from '../common'
 import {
   BaseTransaction,
   GlobalFlagsInterface,
-  // isString,
+  isArray,
+  isString,
   validateBaseTransaction,
-  // validateOptionalField,
+  validateOptionalField,
 } from './common'
 
 /**
@@ -60,15 +61,15 @@ export interface ContractCreate extends BaseTransaction {
 export function validateContractCreate(tx: Record<string, unknown>): void {
   validateBaseTransaction(tx)
 
-  // validateOptionalField(tx, 'ContractCode', isString)
+  validateOptionalField(tx, 'ContractCode', isString)
 
-  // validateOptionalField(tx, 'ContractHash', isString)
+  validateOptionalField(tx, 'ContractHash', isString)
 
-  // validateOptionalField(tx, 'Functions', isany[])
+  validateOptionalField(tx, 'Functions', isArray)
 
-  // validateOptionalField(tx, 'InstanceParameters', isany[])
+  validateOptionalField(tx, 'InstanceParameters', isArray)
 
-  // validateOptionalField(tx, 'InstanceParameterValues', isany[])
+  validateOptionalField(tx, 'InstanceParameterValues', isArray)
 
-  // validateOptionalField(tx, 'URI', isString)
+  validateOptionalField(tx, 'URI', isString)
 }

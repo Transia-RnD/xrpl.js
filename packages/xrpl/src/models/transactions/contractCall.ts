@@ -2,11 +2,12 @@ import { Parameter } from '../common'
 
 import {
   BaseTransaction,
-  // isNumber,
-  // isString,
+  isArray,
+  isNumber,
+  isString,
   validateBaseTransaction,
-  // validateOptionalField,
-  // validateRequiredField,
+  validateOptionalField,
+  validateRequiredField,
 } from './common'
 
 /**
@@ -34,11 +35,11 @@ export interface ContractCall extends BaseTransaction {
 export function validateContractCall(tx: Record<string, unknown>): void {
   validateBaseTransaction(tx)
 
-  // validateRequiredField(tx, 'ComputationAllowance', isNumber)
+  validateRequiredField(tx, 'ComputationAllowance', isNumber)
 
-  // validateRequiredField(tx, 'ContractAccount', isString)
+  validateRequiredField(tx, 'ContractAccount', isString)
 
-  // validateRequiredField(tx, 'FunctionName', isString)
+  validateRequiredField(tx, 'FunctionName', isString)
 
-  // validateOptionalField(tx, 'Parameters', isany[])
+  validateOptionalField(tx, 'Parameters', isArray)
 }

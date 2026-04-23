@@ -1,7 +1,10 @@
-import { assert } from 'chai'
-
-import { validate, ValidationError } from '../../src'
 import { validateContractUserDelete } from '../../src/models/transactions/contractUserDelete'
+import { assertTxIsValid, assertTxValidationError } from '../testUtils'
+
+const assertValid = (tx: any): void =>
+  assertTxIsValid(tx, validateContractUserDelete)
+const assertInvalid = (tx: any, message: string): void =>
+  assertTxValidationError(tx, validateContractUserDelete, message)
 
 /**
  * ContractUserDelete Transaction Verification Testing.
@@ -13,118 +16,49 @@ describe('ContractUserDelete', function () {
 
   beforeEach(function () {
     tx = {
-      /* TODO: add sample transaction */
+      TransactionType: 'ContractUserDelete',
+      Account: 'rWYkbWkCeg8dP6rXALnjgZSjjLyih5NXm',
+      ComputationAllowance: 1000,
+      ContractAccount: 'rPT1Sjq2YGrBMTttX4GZHjKu9dyfzbpAYe',
     } as any
   })
 
   it('verifies valid ContractUserDelete', function () {
-    assert.doesNotThrow(() => validateContractUserDelete(tx))
-    assert.doesNotThrow(() => validate(tx))
+    assertValid(tx)
   })
 
   it('throws w/ missing ComputationAllowance', function () {
     delete tx.ComputationAllowance
-
-    assert.throws(
-      () => validateContractUserDelete(tx),
-      ValidationError,
-      'ContractUserDelete: missing field ComputationAllowance',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractUserDelete: missing field ComputationAllowance',
-    )
+    assertInvalid(tx, 'ContractUserDelete: missing field ComputationAllowance')
   })
 
   it('throws w/ invalid ComputationAllowance', function () {
     tx.ComputationAllowance = 'number'
-
-    assert.throws(
-      () => validateContractUserDelete(tx),
-      ValidationError,
-      'ContractUserDelete: invalid field ComputationAllowance',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractUserDelete: invalid field ComputationAllowance',
-    )
+    assertInvalid(tx, 'ContractUserDelete: invalid field ComputationAllowance')
   })
 
   it('throws w/ missing ContractAccount', function () {
     delete tx.ContractAccount
-
-    assert.throws(
-      () => validateContractUserDelete(tx),
-      ValidationError,
-      'ContractUserDelete: missing field ContractAccount',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractUserDelete: missing field ContractAccount',
-    )
+    assertInvalid(tx, 'ContractUserDelete: missing field ContractAccount')
   })
 
   it('throws w/ invalid ContractAccount', function () {
     tx.ContractAccount = 123
-
-    assert.throws(
-      () => validateContractUserDelete(tx),
-      ValidationError,
-      'ContractUserDelete: invalid field ContractAccount',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractUserDelete: invalid field ContractAccount',
-    )
+    assertInvalid(tx, 'ContractUserDelete: invalid field ContractAccount')
   })
 
   it('throws w/ missing FunctionName', function () {
     delete tx.FunctionName
-
-    assert.throws(
-      () => validateContractUserDelete(tx),
-      ValidationError,
-      'ContractUserDelete: missing field FunctionName',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractUserDelete: missing field FunctionName',
-    )
+    assertInvalid(tx, 'ContractUserDelete: missing field FunctionName')
   })
 
   it('throws w/ invalid FunctionName', function () {
     tx.FunctionName = 123
-
-    assert.throws(
-      () => validateContractUserDelete(tx),
-      ValidationError,
-      'ContractUserDelete: invalid field FunctionName',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractUserDelete: invalid field FunctionName',
-    )
+    assertInvalid(tx, 'ContractUserDelete: invalid field FunctionName')
   })
 
   it('throws w/ invalid Parameters', function () {
-    tx.Parameters =
-      /*TODO*/
-
-      assert.throws(
-        () => validateContractUserDelete(tx),
-        ValidationError,
-        'ContractUserDelete: invalid field Parameters',
-      )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractUserDelete: invalid field Parameters',
-    )
+    tx.Parameters = 'not_an_array'
+    assertInvalid(tx, 'ContractUserDelete: invalid field Parameters')
   })
 })

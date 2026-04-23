@@ -1,8 +1,8 @@
 import {
   BaseTransaction,
-  // isString,
+  isString,
   validateBaseTransaction,
-  // validateRequiredField,
+  validateRequiredField,
 } from './common'
 
 /**
@@ -23,5 +23,5 @@ export interface ContractDelete extends BaseTransaction {
 export function validateContractDelete(tx: Record<string, unknown>): void {
   validateBaseTransaction(tx)
 
-  // validateRequiredField(tx, 'ContractAccount', isString)
+  validateRequiredField(tx, 'ContractAccount', isString)
 }

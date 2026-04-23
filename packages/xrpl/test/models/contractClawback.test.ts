@@ -1,7 +1,10 @@
-import { assert } from 'chai'
-
-import { validate, ValidationError } from '../../src'
 import { validateContractClawback } from '../../src/models/transactions/contractClawback'
+import { assertTxIsValid, assertTxValidationError } from '../testUtils'
+
+const assertValid = (tx: any): void =>
+  assertTxIsValid(tx, validateContractClawback)
+const assertInvalid = (tx: any, message: string): void =>
+  assertTxValidationError(tx, validateContractClawback, message)
 
 /**
  * ContractClawback Transaction Verification Testing.
@@ -13,57 +16,32 @@ describe('ContractClawback', function () {
 
   beforeEach(function () {
     tx = {
-      /* TODO: add sample transaction */
+      TransactionType: 'ContractClawback',
+      Account: 'rWYkbWkCeg8dP6rXALnjgZSjjLyih5NXm',
+      Amount: {
+        currency: 'USD',
+        value: '1000',
+        issuer: 'rWYkbWkCeg8dP6rXALnjgZSjjLyih5NXm',
+      },
     } as any
   })
 
   it('verifies valid ContractClawback', function () {
-    assert.doesNotThrow(() => validateContractClawback(tx))
-    assert.doesNotThrow(() => validate(tx))
+    assertValid(tx)
   })
 
   it('throws w/ missing Amount', function () {
     delete tx.Amount
-
-    assert.throws(
-      () => validateContractClawback(tx),
-      ValidationError,
-      'ContractClawback: missing field Amount',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractClawback: missing field Amount',
-    )
+    assertInvalid(tx, 'ContractClawback: missing field Amount')
   })
 
   it('throws w/ invalid Amount', function () {
     tx.Amount = { currency: 'ETH' }
-
-    assert.throws(
-      () => validateContractClawback(tx),
-      ValidationError,
-      'ContractClawback: invalid field Amount',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractClawback: invalid field Amount',
-    )
+    assertInvalid(tx, 'ContractClawback: invalid field Amount')
   })
 
   it('throws w/ invalid ContractAccount', function () {
     tx.ContractAccount = 123
-
-    assert.throws(
-      () => validateContractClawback(tx),
-      ValidationError,
-      'ContractClawback: invalid field ContractAccount',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractClawback: invalid field ContractAccount',
-    )
+    assertInvalid(tx, 'ContractClawback: invalid field ContractAccount')
   })
 })

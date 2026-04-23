@@ -2,11 +2,11 @@ import { Amount } from '../common'
 
 import {
   BaseTransaction,
-  // isAmount,
-  // isString,
+  isAmount,
+  isString,
   validateBaseTransaction,
-  // validateOptionalField,
-  // validateRequiredField,
+  validateOptionalField,
+  validateRequiredField,
 } from './common'
 
 /**
@@ -29,7 +29,7 @@ export interface ContractClawback extends BaseTransaction {
 export function validateContractClawback(tx: Record<string, unknown>): void {
   validateBaseTransaction(tx)
 
-  // validateRequiredField(tx, 'Amount', isAmount)
+  validateRequiredField(tx, 'Amount', isAmount)
 
-  // validateOptionalField(tx, 'ContractAccount', isString)
+  validateOptionalField(tx, 'ContractAccount', isString)
 }

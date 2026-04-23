@@ -1,9 +1,10 @@
 import { Function, InstanceParameter, InstanceParameterValue } from '../common'
 import {
   BaseTransaction,
-  // isString,
+  isArray,
+  isString,
   validateBaseTransaction,
-  // validateOptionalField,
+  validateOptionalField,
 } from './common'
 
 /**
@@ -36,17 +37,17 @@ export interface ContractModify extends BaseTransaction {
 export function validateContractModify(tx: Record<string, unknown>): void {
   validateBaseTransaction(tx)
 
-  // validateOptionalField(tx, 'ContractAccount', isString)
+  validateOptionalField(tx, 'ContractAccount', isString)
 
-  // validateOptionalField(tx, 'ContractCode', isString)
+  validateOptionalField(tx, 'ContractCode', isString)
 
-  // validateOptionalField(tx, 'ContractHash', isString)
+  validateOptionalField(tx, 'ContractHash', isString)
 
-  // validateOptionalField(tx, 'Functions', isany[])
+  validateOptionalField(tx, 'Functions', isArray)
 
-  // validateOptionalField(tx, 'InstanceParameters', isany[])
+  validateOptionalField(tx, 'InstanceParameters', isArray)
 
-  // validateOptionalField(tx, 'InstanceParameterValues', isany[])
+  validateOptionalField(tx, 'InstanceParameterValues', isArray)
 
-  // validateOptionalField(tx, 'URI', isString)
+  validateOptionalField(tx, 'URI', isString)
 }

@@ -1,11 +1,13 @@
 import { Parameter } from '../common'
+
 import {
   BaseTransaction,
-  // isNumber,
-  // isString,
+  isArray,
+  isNumber,
+  isString,
   validateBaseTransaction,
-  // validateOptionalField,
-  // validateRequiredField,
+  validateOptionalField,
+  validateRequiredField,
 } from './common'
 
 /**
@@ -17,10 +19,6 @@ export interface ContractUserDelete extends BaseTransaction {
   ComputationAllowance: number
 
   ContractAccount: string
-
-  FunctionName: string
-
-  Parameters?: Parameter[]
 }
 
 /**
@@ -32,11 +30,7 @@ export interface ContractUserDelete extends BaseTransaction {
 export function validateContractUserDelete(tx: Record<string, unknown>): void {
   validateBaseTransaction(tx)
 
-  // validateRequiredField(tx, 'ComputationAllowance', isNumber)
+  validateRequiredField(tx, 'ComputationAllowance', isNumber)
 
-  // validateRequiredField(tx, 'ContractAccount', isString)
-
-  // validateRequiredField(tx, 'FunctionName', isString)
-
-  // validateOptionalField(tx, 'Parameters', isany[])
+  validateRequiredField(tx, 'ContractAccount', isString)
 }

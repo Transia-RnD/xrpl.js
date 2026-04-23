@@ -1,7 +1,10 @@
-import { assert } from 'chai'
-
-import { validate, ValidationError } from '../../src'
 import { validateContractModify } from '../../src/models/transactions/contractModify'
+import { assertTxIsValid, assertTxValidationError } from '../testUtils'
+
+const assertValid = (tx: any): void =>
+  assertTxIsValid(tx, validateContractModify)
+const assertInvalid = (tx: any, message: string): void =>
+  assertTxValidationError(tx, validateContractModify, message)
 
 /**
  * ContractModify Transaction Verification Testing.
@@ -13,120 +16,50 @@ describe('ContractModify', function () {
 
   beforeEach(function () {
     tx = {
-      /* TODO: add sample transaction */
+      TransactionType: 'ContractModify',
+      Account: 'rWYkbWkCeg8dP6rXALnjgZSjjLyih5NXm',
+      ContractAccount: 'rPT1Sjq2YGrBMTttX4GZHjKu9dyfzbpAYe',
+      ContractHash:
+        'E5287A664638EDC1110BAF0FD3FF79013353FD797EF14FC970E552ED7097B721',
     } as any
   })
 
   it('verifies valid ContractModify', function () {
-    assert.doesNotThrow(() => validateContractModify(tx))
-    assert.doesNotThrow(() => validate(tx))
+    assertValid(tx)
   })
 
   it('throws w/ invalid ContractAccount', function () {
     tx.ContractAccount = 123
-
-    assert.throws(
-      () => validateContractModify(tx),
-      ValidationError,
-      'ContractModify: invalid field ContractAccount',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractModify: invalid field ContractAccount',
-    )
+    assertInvalid(tx, 'ContractModify: invalid field ContractAccount')
   })
 
   it('throws w/ invalid ContractCode', function () {
     tx.ContractCode = 123
-
-    assert.throws(
-      () => validateContractModify(tx),
-      ValidationError,
-      'ContractModify: invalid field ContractCode',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractModify: invalid field ContractCode',
-    )
+    assertInvalid(tx, 'ContractModify: invalid field ContractCode')
   })
 
   it('throws w/ invalid ContractHash', function () {
     tx.ContractHash = 123
-
-    assert.throws(
-      () => validateContractModify(tx),
-      ValidationError,
-      'ContractModify: invalid field ContractHash',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractModify: invalid field ContractHash',
-    )
+    assertInvalid(tx, 'ContractModify: invalid field ContractHash')
   })
 
   it('throws w/ invalid Functions', function () {
-    tx.Functions =
-      /*TODO*/
-
-      assert.throws(
-        () => validateContractModify(tx),
-        ValidationError,
-        'ContractModify: invalid field Functions',
-      )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractModify: invalid field Functions',
-    )
+    tx.Functions = 'not_an_array'
+    assertInvalid(tx, 'ContractModify: invalid field Functions')
   })
 
   it('throws w/ invalid InstanceParameters', function () {
-    tx.InstanceParameters =
-      /*TODO*/
-
-      assert.throws(
-        () => validateContractModify(tx),
-        ValidationError,
-        'ContractModify: invalid field InstanceParameters',
-      )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractModify: invalid field InstanceParameters',
-    )
+    tx.InstanceParameters = 'not_an_array'
+    assertInvalid(tx, 'ContractModify: invalid field InstanceParameters')
   })
 
   it('throws w/ invalid InstanceParameterValues', function () {
-    tx.InstanceParameterValues =
-      /*TODO*/
-
-      assert.throws(
-        () => validateContractModify(tx),
-        ValidationError,
-        'ContractModify: invalid field InstanceParameterValues',
-      )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractModify: invalid field InstanceParameterValues',
-    )
+    tx.InstanceParameterValues = 'not_an_array'
+    assertInvalid(tx, 'ContractModify: invalid field InstanceParameterValues')
   })
 
   it('throws w/ invalid URI', function () {
     tx.URI = 123
-
-    assert.throws(
-      () => validateContractModify(tx),
-      ValidationError,
-      'ContractModify: invalid field URI',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractModify: invalid field URI',
-    )
+    assertInvalid(tx, 'ContractModify: invalid field URI')
   })
 })

@@ -1,7 +1,10 @@
-import { assert } from 'chai'
-
-import { validate, ValidationError } from '../../src'
 import { validateContractCreate } from '../../src/models/transactions/contractCreate'
+import { assertTxIsValid, assertTxValidationError } from '../testUtils'
+
+const assertValid = (tx: any): void =>
+  assertTxIsValid(tx, validateContractCreate)
+const assertInvalid = (tx: any, message: string): void =>
+  assertTxValidationError(tx, validateContractCreate, message)
 
 /**
  * ContractCreate Transaction Verification Testing.
@@ -13,105 +16,44 @@ describe('ContractCreate', function () {
 
   beforeEach(function () {
     tx = {
-      /* TODO: add sample transaction */
+      TransactionType: 'ContractCreate',
+      Account: 'rWYkbWkCeg8dP6rXALnjgZSjjLyih5NXm',
+      ContractHash:
+        'E5287A664638EDC1110BAF0FD3FF79013353FD797EF14FC970E552ED7097B721',
     } as any
   })
 
   it('verifies valid ContractCreate', function () {
-    assert.doesNotThrow(() => validateContractCreate(tx))
-    assert.doesNotThrow(() => validate(tx))
+    assertValid(tx)
   })
 
   it('throws w/ invalid ContractCode', function () {
     tx.ContractCode = 123
-
-    assert.throws(
-      () => validateContractCreate(tx),
-      ValidationError,
-      'ContractCreate: invalid field ContractCode',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractCreate: invalid field ContractCode',
-    )
+    assertInvalid(tx, 'ContractCreate: invalid field ContractCode')
   })
 
   it('throws w/ invalid ContractHash', function () {
     tx.ContractHash = 123
-
-    assert.throws(
-      () => validateContractCreate(tx),
-      ValidationError,
-      'ContractCreate: invalid field ContractHash',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractCreate: invalid field ContractHash',
-    )
+    assertInvalid(tx, 'ContractCreate: invalid field ContractHash')
   })
 
   it('throws w/ invalid Functions', function () {
-    tx.Functions =
-      /*TODO*/
-
-      assert.throws(
-        () => validateContractCreate(tx),
-        ValidationError,
-        'ContractCreate: invalid field Functions',
-      )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractCreate: invalid field Functions',
-    )
+    tx.Functions = 'not_an_array'
+    assertInvalid(tx, 'ContractCreate: invalid field Functions')
   })
 
   it('throws w/ invalid InstanceParameters', function () {
-    tx.InstanceParameters =
-      /*TODO*/
-
-      assert.throws(
-        () => validateContractCreate(tx),
-        ValidationError,
-        'ContractCreate: invalid field InstanceParameters',
-      )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractCreate: invalid field InstanceParameters',
-    )
+    tx.InstanceParameters = 'not_an_array'
+    assertInvalid(tx, 'ContractCreate: invalid field InstanceParameters')
   })
 
   it('throws w/ invalid InstanceParameterValues', function () {
-    tx.InstanceParameterValues =
-      /*TODO*/
-
-      assert.throws(
-        () => validateContractCreate(tx),
-        ValidationError,
-        'ContractCreate: invalid field InstanceParameterValues',
-      )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractCreate: invalid field InstanceParameterValues',
-    )
+    tx.InstanceParameterValues = 'not_an_array'
+    assertInvalid(tx, 'ContractCreate: invalid field InstanceParameterValues')
   })
 
   it('throws w/ invalid URI', function () {
     tx.URI = 123
-
-    assert.throws(
-      () => validateContractCreate(tx),
-      ValidationError,
-      'ContractCreate: invalid field URI',
-    )
-    assert.throws(
-      () => validate(tx),
-      ValidationError,
-      'ContractCreate: invalid field URI',
-    )
+    assertInvalid(tx, 'ContractCreate: invalid field URI')
   })
 })
