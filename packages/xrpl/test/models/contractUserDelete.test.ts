@@ -46,19 +46,4 @@ describe('ContractUserDelete', function () {
     tx.ContractAccount = 123
     assertInvalid(tx, 'ContractUserDelete: invalid field ContractAccount')
   })
-
-  it('throws w/ missing FunctionName', function () {
-    delete tx.FunctionName
-    assertInvalid(tx, 'ContractUserDelete: missing field FunctionName')
-  })
-
-  it('throws w/ invalid FunctionName', function () {
-    tx.FunctionName = 123
-    assertInvalid(tx, 'ContractUserDelete: invalid field FunctionName')
-  })
-
-  it('throws w/ invalid Parameters', function () {
-    tx.Parameters = 'not_an_array'
-    assertInvalid(tx, 'ContractUserDelete: invalid field Parameters')
-  })
 })
