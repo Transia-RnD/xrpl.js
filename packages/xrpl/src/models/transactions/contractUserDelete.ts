@@ -1,12 +1,8 @@
-import { Parameter } from '../common'
-
 import {
   BaseTransaction,
-  isArray,
   isNumber,
   isString,
   validateBaseTransaction,
-  validateOptionalField,
   validateRequiredField,
 } from './common'
 

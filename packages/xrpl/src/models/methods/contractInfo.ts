@@ -21,16 +21,17 @@ export interface ContractInfoRequest
   function?: string
 }
 
-interface ContractInfoResponse extends BaseResponse {
+export interface ContractInfoResponse extends BaseResponse {
   result: {
     // IDEA
-    // contract: any // LedgerObject Contract for the contract instance
-    // contract_source: any // LedgerObject ContractSource for the contract code
-    // contract_account: any LedgerObject AccountRoot for pseudo-account of the contract
+    // contract: LedgerObject Contract for the contract instance
+    // contract_source: LedgerObject ContractSource for the contract code
+    // contract_account: LedgerObject AccountRoot for pseudo-account of the contract
 
     contract_account: string
     code: string
     hash: string
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- function definitions can vary
     functions: any[]
     source_code_uri: string
 
@@ -39,7 +40,9 @@ interface ContractInfoResponse extends BaseResponse {
      * in the ledger.
      */
     account_data: AccountRoot
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- contract data structure is flexible
     contract_data: any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- user data structure is flexible
     user_data?: any
 
     /**

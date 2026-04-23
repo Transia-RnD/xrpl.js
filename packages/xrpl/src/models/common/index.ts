@@ -340,6 +340,7 @@ export interface ParameterType {
 
 export interface ParameterValue {
   type: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- value can be any type depending on the parameter
   value: any
 }
 

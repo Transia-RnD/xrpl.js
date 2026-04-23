@@ -1,5 +1,6 @@
-import { BaseLedgerEntry, HasPreviousTxnID } from './BaseLedgerEntry'
 import { Function, InstanceParameter } from '../common'
+
+import { BaseLedgerEntry, HasPreviousTxnID } from './BaseLedgerEntry'
 
 /**
  *

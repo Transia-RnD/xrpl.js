@@ -16,5 +16,6 @@ export default interface ContractData
   /** The account associated with this contract. */
   ContractAccount: string
   /** The JSON data for the contract. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- contract JSON data can have any shape
   ContractJson: Record<string, any>
 }
