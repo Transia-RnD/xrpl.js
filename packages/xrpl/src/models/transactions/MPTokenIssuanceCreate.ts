@@ -64,8 +64,7 @@ export enum MPTokenIssuanceCreateFlags {
  * @category Transaction Flags
  */
 
-export interface MPTokenIssuanceCreateFlagsInterface
-  extends GlobalFlagsInterface {
+export interface MPTokenIssuanceCreateFlagsInterface extends GlobalFlagsInterface {
   tfMPTCanLock?: boolean
   tfMPTRequireAuth?: boolean
   tfMPTCanEscrow?: boolean
