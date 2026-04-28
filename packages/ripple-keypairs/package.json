@@ -1,13 +1,13 @@
 {
-  "name": "@transia/ripple-keypairs",
-  "version": "2.0.1-quantum.0",
+  "name": "ripple-keypairs",
+  "version": "2.0.0",
   "description": "Cryptographic key pairs for the XRP Ledger",
   "scripts": {
     "build": "tsc --build tsconfig.build.json",
     "test": "jest --verbose false --silent=false ./test/*.test.ts",
     "test:browser": "npm run build && karma start ./karma.config.js",
     "clean": "rm -rf ./dist ./coverage ./test/testCompiledForWeb tsconfig.build.tsbuildinfo",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --max-warnings 0",
     "prepublish": "npm run lint && npm test"
   },
   "files": [
@@ -19,10 +19,9 @@
     "test": "test"
   },
   "dependencies": {
-    "@noble/curves": "^1.0.0",
-    "@noble/post-quantum": "^0.4.1",
-    "@transia/isomorphic": "^1.0.2-quantum.0",
-    "@transia/ripple-address-codec": "^5.0.1-quantum.0"
+    "@noble/curves": "^2.0.1",
+    "@xrplf/isomorphic": "^1.0.1",
+    "ripple-address-codec": "^5.0.0"
   },
   "keywords": [
     "ripple",
@@ -38,6 +37,5 @@
   "prettier": "@xrplf/prettier-config",
   "engines": {
     "node": ">= 18"
-  },
-  "gitHead": "e879a4ea79a7a12027ba0a1c116f0e83aec60344"
+  }
 }

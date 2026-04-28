@@ -32,6 +32,11 @@ function generateSeed(
     algorithm?: Algorithm
   } = {},
 ): string {
+  const VALID_ALGORITHMS: Algorithm[] = ['ecdsa-secp256k1', 'ed25519']
+  assert.ok(
+    !options.algorithm || VALID_ALGORITHMS.includes(options.algorithm),
+    `Unsupported algorithm: ${options.algorithm}. Use one of: ${VALID_ALGORITHMS.join(', ')}`,
+  )
   assert.ok(
     !options.entropy || options.entropy.length >= 16,
     'entropy too short',
@@ -126,4 +131,5 @@ export {
   deriveAddress,
   deriveNodeAddress,
   decodeSeed,
+  type Algorithm,
 }

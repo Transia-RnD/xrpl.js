@@ -3,6 +3,9 @@ import {
   deriveKeypair,
   generateSeed,
 } from '@transia/ripple-keypairs'
+// Use an import alias to avoid name-conflict with the Algorithm type
+// defined in extensions/node_modules/typescript/lib/lib.dom.d.ts
+import type { Algorithm as SignAlgorithm } from '@transia/ripple-keypairs'
 
 import {
   entropyToSecret,
@@ -37,7 +40,14 @@ export class Account {
     },
   }
 
-  constructor(secretNumbers?: string[] | string | Uint8Array) {
+  private readonly _algorithm: SignAlgorithm
+
+  constructor(
+    secretNumbers?: string[] | string | Uint8Array,
+    algorithm: SignAlgorithm = 'ed25519',
+  ) {
+    this._algorithm = algorithm
+
     if (typeof secretNumbers === 'string') {
       this._secret = parseSecretString(secretNumbers)
     } else if (Array.isArray(secretNumbers)) {
@@ -79,7 +89,10 @@ export class Account {
   private derive(): void {
     try {
       const entropy = secretToEntropy(this._secret)
-      this._account.familySeed = generateSeed({ entropy })
+      this._account.familySeed = generateSeed({
+        entropy,
+        algorithm: this._algorithm,
+      })
       this._account.keypair = deriveKeypair(this._account.familySeed)
       this._account.address = deriveAddress(this._account.keypair.publicKey)
     } catch (error) {

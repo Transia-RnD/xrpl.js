@@ -1,5 +1,6 @@
 /* eslint-disable no-inline-comments -- Necessary for important note */
 /* eslint-disable max-lines -- There is a lot to export */
+/* eslint-disable prettier/prettier -- Required here to keep formatting in line */
 import type { APIVersion, DEFAULT_API_VERSION } from '../common'
 
 import {
@@ -107,7 +108,14 @@ import {
   LedgerDataRequest,
   LedgerDataResponse,
 } from './ledgerData'
-import { LedgerEntryRequest, LedgerEntryResponse } from './ledgerEntry'
+import {
+  LedgerEntryBinaryRequest,
+  LedgerEntryJsonRequest,
+  LedgerEntryRequest,
+  LedgerEntryBinaryResponse,
+  LedgerEntryJsonResponse,
+  LedgerEntryResponse,
+} from './ledgerEntry'
 import { ManifestRequest, ManifestResponse } from './manifest'
 import { NFTBuyOffersRequest, NFTBuyOffersResponse } from './nftBuyOffers'
 import {
@@ -411,8 +419,12 @@ export type RequestResponseMap<
   ? LedgerCurrentResponse
   : T extends LedgerDataRequest
   ? LedgerDataResponse
+  : T extends LedgerEntryBinaryRequest
+  ? LedgerEntryBinaryResponse
+  : T extends LedgerEntryJsonRequest
+  ? LedgerEntryJsonResponse
   : T extends LedgerEntryRequest
-  ? LedgerEntryResponse
+  ? LedgerEntryJsonResponse
   : T extends SimulateBinaryRequest
   ? SimulateBinaryResponse
   : T extends SimulateJsonRequest
@@ -564,7 +576,11 @@ export {
   LedgerDataBinaryLedgerEntry,
   LedgerDataResponse,
   LedgerDataLedgerState,
+  LedgerEntryBinaryRequest,
+  LedgerEntryJsonRequest,
   LedgerEntryRequest,
+  LedgerEntryBinaryResponse,
+  LedgerEntryJsonResponse,
   LedgerEntryResponse,
   // transaction methods with types
   SimulateRequest,

@@ -1,6 +1,6 @@
 {
-  "name": "@transia/ripple-binary-codec",
-  "version": "2.5.1-quantum.0",
+  "name": "ripple-binary-codec",
+  "version": "2.7.0",
   "description": "XRP Ledger binary codec",
   "files": [
     "dist/*",
@@ -11,9 +11,9 @@
     "test": "test"
   },
   "dependencies": {
-    "@transia/isomorphic": "^1.0.2-quantum.0",
-    "@transia/ripple-address-codec": "^5.0.1-quantum.0",
-    "bignumber.js": "^9.0.0"
+    "@xrplf/isomorphic": "^1.0.1",
+    "bignumber.js": "^10.0.2",
+    "ripple-address-codec": "^5.0.0"
   },
   "scripts": {
     "build": "tsc --build tsconfig.build.json && copyfiles ./src/enums/definitions.json ./dist/enums/",
@@ -21,7 +21,7 @@
     "prepublishOnly": "npm test",
     "test": "npm run build && jest --verbose false --silent=false ./test/*.test.ts",
     "test:browser": "npm run build && karma start ./karma.config.js",
-    "lint": "eslint . --ext .ts --ext .test.js",
+    "lint": "eslint . --max-warnings 0",
     "generateDefinitions": "node ./tools/generateDefinitions.js"
   },
   "keywords": [
@@ -43,6 +43,5 @@
   "prettier": "@xrplf/prettier-config",
   "engines": {
     "node": ">= 18"
-  },
-  "gitHead": "e879a4ea79a7a12027ba0a1c116f0e83aec60344"
+  }
 }

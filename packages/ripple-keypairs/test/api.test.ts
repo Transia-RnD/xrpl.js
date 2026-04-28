@@ -15,15 +15,15 @@ const entropy = new Uint8Array([
 ])
 
 describe('api', () => {
-  it('generateSeed - secp256k1', () => {
-    expect(generateSeed({ entropy })).toEqual(fixtures.secp256k1.seed)
+  it('generateSeed - ed25519', () => {
+    expect(generateSeed({ entropy })).toEqual(fixtures.ed25519.seed)
   })
 
-  it('generateSeed - secp256k1, random', () => {
+  it('generateSeed - ed25519, random', () => {
     const seed = generateSeed()
     expect(seed.startsWith('s')).toBeTruthy()
     const { type, bytes } = decodeSeed(seed)
-    expect(type).toEqual('secp256k1')
+    expect(type).toEqual('ed25519')
     expect(bytes.length).toEqual(16)
   })
 
