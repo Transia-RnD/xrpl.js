@@ -8,7 +8,7 @@ import {
   sign,
   verify,
 } from '../src'
-import { stringToHex } from '@xrplf/isomorphic/utils'
+import { stringToHex } from '@transia/isomorphic/utils'
 
 const entropy = new Uint8Array([
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
@@ -41,25 +41,17 @@ describe('api', () => {
     expect(bytes.length).toEqual(16)
   })
 
-  it('generateSeed - secp256k1, deterministic', () => {
-    expect(generateSeed({ entropy, algorithm: 'ecdsa-secp256k1' })).toEqual(
-      fixtures.secp256k1.seed,
+  it('generateSeed - dilithium', () => {
+    expect(generateSeed({ entropy, algorithm: 'dilithium' })).toEqual(
+      fixtures.dilithium.seed,
     )
   })
 
-  it('generateSeed - secp256k1, random', () => {
-    const seed = generateSeed({ algorithm: 'ecdsa-secp256k1' })
+  it('generateSeed - dilithium, random', () => {
+    const seed = generateSeed({ algorithm: 'dilithium' })
     expect(seed.startsWith('s')).toBeTruthy()
     const { type, bytes } = decodeSeed(seed)
-    expect(type).toEqual('secp256k1')
-    expect(bytes.length).toEqual(16)
-  })
-
-  it('generateSeed, default algorithm used is ed25519', () => {
-    const seed = generateSeed()
-    expect(seed.startsWith('sEd')).toBeTruthy()
-    const { type, bytes } = decodeSeed(seed)
-    expect(type).toEqual('ed25519')
+    expect(type).toEqual('dilithium')
     expect(bytes.length).toEqual(16)
   })
 
@@ -71,6 +63,11 @@ describe('api', () => {
   it('deriveKeypair - ed25519', () => {
     const keypair = deriveKeypair(fixtures.ed25519.seed)
     expect(keypair).toEqual(fixtures.ed25519.keypair)
+  })
+
+  it('deriveKeypair - dilithium', () => {
+    const keypair = deriveKeypair(fixtures.dilithium.seed)
+    expect(keypair).toEqual(fixtures.dilithium.keypair)
   })
 
   it('deriveKeypair - secp256k1 - validator', () => {
@@ -87,6 +84,13 @@ describe('api', () => {
     expect(keypair).toEqual(fixtures.ed25519.validatorKeypair)
   })
 
+  it('deriveKeypair - dilithium - validator', () => {
+    const keypair = deriveKeypair(fixtures.dilithium.seed, {
+      validator: true,
+    })
+    expect(keypair).toEqual(fixtures.dilithium.validatorKeypair)
+  })
+
   it('deriveAddress - secp256k1 public key', () => {
     const address = deriveAddress(fixtures.secp256k1.keypair.publicKey)
     expect(address).toEqual(fixtures.secp256k1.address)
@@ -95,6 +99,11 @@ describe('api', () => {
   it('deriveAddress - ed25519 public key', () => {
     const address = deriveAddress(fixtures.ed25519.keypair.publicKey)
     expect(address).toEqual(fixtures.ed25519.address)
+  })
+
+  it('deriveAddress - dilithium public key', () => {
+    const address = deriveAddress(fixtures.dilithium.keypair.publicKey)
+    expect(address).toEqual(fixtures.dilithium.address)
   })
 
   it('sign - secp256k1', () => {
@@ -125,6 +134,22 @@ describe('api', () => {
     const signature = fixtures.ed25519.signature
     const publicKey = fixtures.ed25519.keypair.publicKey
     const message = fixtures.ed25519.message
+    const messageHex = stringToHex(message)
+    expect(verify(messageHex, signature, publicKey)).toBeTruthy()
+  })
+
+  it('sign - dilithium', () => {
+    const privateKey = fixtures.dilithium.keypair.privateKey
+    const message = fixtures.dilithium.message
+    const messageHex = stringToHex(message)
+    const signature = sign(messageHex, privateKey)
+    expect(signature).toEqual(fixtures.dilithium.signature)
+  })
+
+  it('verify - dilithium', () => {
+    const signature = fixtures.dilithium.signature
+    const publicKey = fixtures.dilithium.keypair.publicKey
+    const message = fixtures.dilithium.message
     const messageHex = stringToHex(message)
     expect(verify(messageHex, signature, publicKey)).toBeTruthy()
   })

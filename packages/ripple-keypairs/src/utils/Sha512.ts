@@ -1,5 +1,5 @@
-import { sha512 } from '@xrplf/isomorphic/sha512'
-import { bytesToNumberBE } from '@noble/curves/utils.js'
+import { sha512 } from '@transia/isomorphic/sha512'
+import { bytesToNumberBE } from '@noble/curves/abstract/utils'
 
 type Input = Uint8Array | number[] | string
 

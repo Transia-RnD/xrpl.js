@@ -1,5 +1,5 @@
-import { encode, encodeForSigning } from 'ripple-binary-codec'
-import { verify } from 'ripple-keypairs'
+import { encode, encodeForSigning } from '@transia/ripple-binary-codec'
+import { verify } from '@transia/ripple-keypairs'
 
 import { ValidationError } from '../errors'
 import { Signer } from '../models/common'

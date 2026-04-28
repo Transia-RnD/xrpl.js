@@ -1,6 +1,6 @@
 import { Comparable } from './serialized-type'
 import { BinaryParser } from '../serdes/binary-parser'
-import { HEX_REGEX, hexToBytes } from '@xrplf/isomorphic/utils'
+import { HEX_REGEX, hexToBytes } from '@transia/isomorphic/utils'
 import { compare } from '../utils'
 
 /**

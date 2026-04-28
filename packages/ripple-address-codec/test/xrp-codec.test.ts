@@ -1,14 +1,16 @@
-import { bytesToHex, hexToBytes, stringToHex } from '@xrplf/isomorphic/utils'
+import { bytesToHex, hexToBytes, stringToHex } from '@transia/isomorphic/utils'
 
 import {
   codec,
   decodeAccountID,
   decodeAccountPublic,
   decodeNodePublic,
+  decodeNodePrivate,
   decodeSeed,
   encodeAccountID,
   encodeAccountPublic,
   encodeNodePublic,
+  encodeNodePrivate,
   encodeSeed,
   isValidClassicAddress,
 } from '../src'
@@ -62,6 +64,24 @@ makeEncodeDecodeTest(
   'aB44YfzW24VDEJQ2UuLPV2PvqcPCSoLnL7y5M1EzhdW4LnK5xMS3',
   '023693F15967AE357D0327974AD46FE3C127113B1110D6044FD41E723689F81CC6',
 )
+
+it('can encode and decode dilithium node public key (1312 bytes)', function () {
+  const hex = '0123456789ABCDEF'.repeat(164)
+  const encoded = encodeNodePublic(hexToBytes(hex), 1312)
+  expect(encoded).toBeDefined()
+  const decoded = decodeNodePublic(encoded)
+  expect(decoded.length).toBe(1312)
+  expect(bytesToHex(decoded)).toBe(hex)
+})
+
+it('can encode and decode dilithium account public key (1312 bytes)', function () {
+  const hex = 'FEDCBA9876543210'.repeat(164)
+  const encoded = encodeAccountPublic(hexToBytes(hex), 1312)
+  expect(encoded).toBeDefined()
+  const decoded = decodeAccountPublic(encoded)
+  expect(decoded.length).toBe(1312)
+  expect(bytesToHex(decoded)).toBe(hex)
+})
 
 it('can decode arbitrary seeds', function () {
   const decoded = decodeSeed('sEdTM1uX8pu2do5XvTnutH6HsouMaM2')
@@ -149,6 +169,15 @@ describe('encodeSeed', function () {
     expect(result).toBe('sEdV19BLfeQeKdEXyYA4NhjPJe6XBfG')
   })
 
+  it('encodes a dilithium seed', function () {
+    const result = encodeSeed(
+      hexToBytes('A1B2C3D4E5F6789012345678DEADBEEF'),
+      'dilithium',
+    )
+    expect(result).toBeDefined()
+    expect(typeof result).toBe('string')
+  })
+
   it('attempting to encode a seed with less than 16 bytes of entropy throws', function () {
     expect(() => {
       encodeSeed(hexToBytes('CF2DE378FBDD7E2EE87D486DFB5A7B'), 'secp256k1')
@@ -173,6 +202,16 @@ describe('decodeSeed', function () {
     const decoded = decodeSeed('sn259rEFXrQrWyx3Q7XneWcwV6dfL')
     expect(bytesToHex(decoded.bytes)).toBe('CF2DE378FBDD7E2EE87D486DFB5A7BFF')
     expect(decoded.type).toBe('secp256k1')
+  })
+
+  it('can decode a dilithium seed', function () {
+    const encoded = encodeSeed(
+      hexToBytes('A1B2C3D4E5F6789012345678DEADBEEF'),
+      'dilithium',
+    )
+    const decoded = decodeSeed(encoded)
+    expect(bytesToHex(decoded.bytes)).toBe('A1B2C3D4E5F6789012345678DEADBEEF')
+    expect(decoded.type).toBe('dilithium')
   })
 })
 
@@ -203,6 +242,47 @@ describe('decodeNodePublic', function () {
     expect(bytesToHex(decoded)).toBe(
       '0388E5BA87A000CB807240DF8C848EB0B5FFA5C8E5A521BC8E105C0F0A44217828',
     )
+  })
+})
+
+describe('encodeNodePrivate', function () {
+  it('encodes a standard node private key (32 bytes)', function () {
+    const bytes = hexToBytes(
+      '00112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF',
+    )
+    const encoded = encodeNodePrivate(bytes)
+    expect(encoded).toBeDefined()
+    expect(typeof encoded).toBe('string')
+  })
+
+  it('encodes a dilithium node private key (2560 bytes)', function () {
+    const dilithiumPrivateKeyHex = 'ABCDEF0123456789'.repeat(320)
+    const bytes = hexToBytes(dilithiumPrivateKeyHex)
+    expect(bytes.length).toBe(2560)
+    const encoded = encodeNodePrivate(bytes)
+    expect(encoded).toBeDefined()
+    expect(typeof encoded).toBe('string')
+  })
+})
+
+describe('decodeNodePrivate', function () {
+  it('decodes a standard node private key (32 bytes)', function () {
+    const originalHex =
+      '00112233445566778899AABBCCDDEEFF00112233445566778899AABBCCDDEEFF'
+    const bytes = hexToBytes(originalHex)
+    const encoded = encodeNodePrivate(bytes)
+    const decoded = decodeNodePrivate(encoded)
+    expect(decoded.length).toBe(32)
+    expect(bytesToHex(decoded)).toBe(originalHex)
+  })
+
+  it('decodes a dilithium node private key (2560 bytes)', function () {
+    const dilithiumPrivateKeyHex = 'ABCDEF0123456789'.repeat(320)
+    const bytes = hexToBytes(dilithiumPrivateKeyHex)
+    const encoded = encodeNodePrivate(bytes)
+    const decoded = decodeNodePrivate(encoded)
+    expect(decoded.length).toBe(2560)
+    expect(bytesToHex(decoded)).toBe(dilithiumPrivateKeyHex.toUpperCase())
   })
 })
 

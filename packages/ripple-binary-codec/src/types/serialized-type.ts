@@ -1,7 +1,7 @@
 import { BytesList } from '../serdes/binary-serializer'
 import { BinaryParser } from '../serdes/binary-parser'
 import { XrplDefinitionsBase } from '../enums'
-import { bytesToHex } from '@xrplf/isomorphic/utils'
+import { bytesToHex } from '@transia/isomorphic/utils'
 
 type JSON = string | number | boolean | null | undefined | JSON[] | JsonObject
 

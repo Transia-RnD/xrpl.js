@@ -1,5 +1,5 @@
+import { AMMBid } from '@transia/xrpl'
 import { assert } from 'chai'
-import { AMMBid } from 'xrpl'
 
 import { AMMInfoResponse } from '../../../src'
 import serverUrl from '../serverUrl'

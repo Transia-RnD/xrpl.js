@@ -3,10 +3,10 @@ import {
   decodeSeed,
   encodeAccountID,
   encodeSeed,
-} from 'ripple-address-codec'
-import { ripemd160 } from '@xrplf/isomorphic/ripemd160'
-import { sha256 } from '@xrplf/isomorphic/sha256'
-import { hexToBytes, randomBytes } from '@xrplf/isomorphic/utils'
+} from '@transia/ripple-address-codec'
+import { ripemd160 } from '@transia/isomorphic/ripemd160'
+import { sha256 } from '@transia/isomorphic/sha256'
+import { hexToBytes, randomBytes } from '@transia/isomorphic/utils'
 
 import { accountPublicFromPublicGenerator } from './signing-schemes/secp256k1/utils'
 import Sha512 from './utils/Sha512'
@@ -19,9 +19,10 @@ import {
 
 import secp256k1 from './signing-schemes/secp256k1'
 import ed25519 from './signing-schemes/ed25519'
+import dilithium from './signing-schemes/dilithium'
 
 function getSigningScheme(algorithm: Algorithm): SigningScheme {
-  const schemes = { 'ecdsa-secp256k1': secp256k1, ed25519 }
+  const schemes = { 'ecdsa-secp256k1': secp256k1, ed25519, dilithium }
   return schemes[algorithm]
 }
 
@@ -43,7 +44,14 @@ function generateSeed(
   const entropy = options.entropy
     ? options.entropy.slice(0, 16)
     : randomBytes(16)
-  const type = options.algorithm === 'ecdsa-secp256k1' ? 'secp256k1' : 'ed25519'
+  let type: 'ed25519' | 'secp256k1' | 'dilithium'
+  if (options.algorithm === 'ed25519') {
+    type = 'ed25519'
+  } else if (options.algorithm === 'dilithium') {
+    type = 'dilithium'
+  } else {
+    type = 'secp256k1'
+  }
   return encodeSeed(entropy, type)
 }
 
@@ -57,10 +65,19 @@ function deriveKeypair(
 ): KeyPair {
   const decoded = decodeSeed(seed)
   const proposedAlgorithm = options?.algorithm ?? decoded.type
-  const algorithm =
-    proposedAlgorithm === 'ed25519' ? 'ed25519' : 'ecdsa-secp256k1'
+  let algorithm: Algorithm
+  if (proposedAlgorithm === 'ed25519') {
+    algorithm = 'ed25519'
+  } else if (proposedAlgorithm === 'dilithium') {
+    algorithm = 'dilithium'
+  } else {
+    algorithm = 'ecdsa-secp256k1'
+  }
   const scheme = getSigningScheme(algorithm)
   const keypair = scheme.deriveKeypair(decoded.bytes, options)
+  // console.log(keypair.privateKey)
+  // console.log(keypair.publicKey)
+
   const messageToVerify = Sha512.half('This test message should verify.')
   const signature = scheme.sign(messageToVerify, keypair.privateKey)
   /* istanbul ignore if */

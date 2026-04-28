@@ -13,7 +13,7 @@ import {
   isValidClassicAddress,
   isValidXAddress,
   xAddressToClassicAddress,
-} from 'ripple-address-codec'
+} from '@transia/ripple-address-codec'
 import {
   encode as rbcEncode,
   decode as rbcDecode,
@@ -21,8 +21,8 @@ import {
   encodeForSigning as rbcEncodeForSigning,
   encodeForSigningClaim as rbcEncodeForSigningClaim,
   encodeForSigningBatch as rbcEncodeForSigningBatch,
-} from 'ripple-binary-codec'
-import { verify as verifyKeypairSignature } from 'ripple-keypairs'
+} from '@transia/ripple-binary-codec'
+import { verify as verifyKeypairSignature } from '@transia/ripple-keypairs'
 
 import type { APIVersion } from '../models'
 import { LedgerEntry } from '../models/ledger'

@@ -1,6 +1,6 @@
 import { coreTypes } from './types'
 import BigNumber from 'bignumber.js'
-import { bytesToHex, hexToBytes } from '@xrplf/isomorphic/utils'
+import { bytesToHex, hexToBytes } from '@transia/isomorphic/utils'
 
 /**
  * class for encoding and decoding quality

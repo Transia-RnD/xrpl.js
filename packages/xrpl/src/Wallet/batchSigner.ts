@@ -1,5 +1,5 @@
-import { encode, encodeForSigningBatch } from 'ripple-binary-codec'
-import { sign } from 'ripple-keypairs'
+import { encode, encodeForSigningBatch } from '@transia/ripple-binary-codec'
+import { sign } from '@transia/ripple-keypairs'
 
 import { ValidationError } from '../errors'
 import { Batch, Transaction, validate } from '../models'

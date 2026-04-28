@@ -1,6 +1,6 @@
-import { numberToBytesBE } from '@noble/curves/utils.js'
-import { secp256k1 as nobleSecp256k1 } from '@noble/curves/secp256k1.js'
-import { bytesToHex, hexToBytes } from '@xrplf/isomorphic/utils'
+import { numberToBytesBE } from '@noble/curves/abstract/utils'
+import { secp256k1 as nobleSecp256k1 } from '@noble/curves/secp256k1'
+import { bytesToHex, hexToBytes } from '@transia/isomorphic/utils'
 
 import type {
   DeriveKeyPairOptions,

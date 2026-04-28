@@ -1,4 +1,4 @@
-import { AMMClawback, AMMDeposit, AMMDepositFlags, XRP } from 'xrpl'
+import { AMMClawback, AMMDeposit, AMMDepositFlags, XRP } from '@transia/xrpl'
 
 import serverUrl from '../serverUrl'
 import {

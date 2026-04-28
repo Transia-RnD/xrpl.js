@@ -1,4 +1,4 @@
-import { stringToHex } from '@xrplf/isomorphic/src/utils'
+import { stringToHex } from '@transia/isomorphic/src/utils'
 
 import { validateNFTokenModify } from '../../src/models/transactions/NFTokenModify'
 import { assertTxIsValid, assertTxValidationError } from '../testUtils'

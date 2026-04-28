@@ -3,7 +3,7 @@ import {
   concat,
   hexToBytes,
   randomBytes,
-} from '@xrplf/isomorphic/utils'
+} from '@transia/isomorphic/utils'
 
 function randomEntropy(): Uint8Array {
   return randomBytes(16)

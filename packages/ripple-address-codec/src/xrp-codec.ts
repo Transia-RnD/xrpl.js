@@ -3,7 +3,7 @@
  */
 
 import { base58xrp, BytesCoder } from '@scure/base'
-import { sha256 } from '@xrplf/isomorphic/sha256'
+import { sha256 } from '@transia/isomorphic/sha256'
 
 import { arrayEqual, concatArgs, ByteArray } from './utils'
 
@@ -46,12 +46,12 @@ class Codec {
     opts: {
       versions: Array<number | number[]>
       expectedLength?: number
-      versionTypes?: ['ed25519', 'secp256k1']
+      versionTypes?: ['ed25519', 'secp256k1', 'dilithium']
     },
   ): {
     version: number[]
     bytes: Uint8Array
-    type: 'ed25519' | 'secp256k1' | null
+    type: 'ed25519' | 'secp256k1' | 'dilithium' | null
   } {
     const versions = opts.versions
     const types = opts.versionTypes
@@ -115,7 +115,8 @@ class Codec {
     if (!checkByteLength(bytes, expectedLength)) {
       throw new Error(
         'unexpected_payload_length: bytes.length does not match expectedLength.' +
-          ' Ensure that the bytes are a Uint8Array.',
+          ' Ensure that the bytes are a Uint8Array.' +
+          ` Got ${bytes.length} Expected ${expectedLength}`,
       )
     }
     return this.encodeChecked(concatArgs(versions, bytes))
@@ -150,9 +151,13 @@ const ACCOUNT_PUBLIC_KEY = 0x23
 const FAMILY_SEED = 0x21
 // 28; Validation public key (33 bytes)
 const NODE_PUBLIC = 0x1c
+// 32; Validation private key (32 bytes for ed25519, 2560 bytes for dilithium)
+const NODE_PRIVATE = 0x20
 
 // [1, 225, 75]
 const ED25519_SEED = [0x01, 0xe1, 0x4b]
+//
+const DILITHIUM_SEED = 0x22
 
 const codecOptions = {
   sha256,
@@ -163,19 +168,25 @@ const codecWithXrpAlphabet = new Codec(codecOptions)
 export const codec = codecWithXrpAlphabet
 
 // entropy is a Uint8Array of size 16
-// type is 'ed25519' or 'secp256k1'
+// type is 'ed25519' or 'secp256k1' or 'dilithium'
 export function encodeSeed(
   entropy: ByteArray,
-  type: 'ed25519' | 'secp256k1',
+  type: 'ed25519' | 'secp256k1' | 'dilithium',
 ): string {
   if (!checkByteLength(entropy, 16)) {
     throw new Error('entropy must have length 16')
   }
+  let versions
+  if (type === 'ed25519') {
+    versions = ED25519_SEED
+  } else if (type === 'dilithium') {
+    versions = [DILITHIUM_SEED]
+  } else {
+    versions = [FAMILY_SEED]
+  }
   const opts = {
     expectedLength: 16,
-
-    // for secp256k1, use `FAMILY_SEED`
-    versions: type === 'ed25519' ? ED25519_SEED : [FAMILY_SEED],
+    versions,
   }
 
   // prefixes entropy with version bytes
@@ -185,18 +196,18 @@ export function encodeSeed(
 export function decodeSeed(
   seed: string,
   opts: {
-    versionTypes: ['ed25519', 'secp256k1']
+    versionTypes: ['ed25519', 'secp256k1', 'dilithium']
     versions: Array<number | number[]>
     expectedLength: number
   } = {
-    versionTypes: ['ed25519', 'secp256k1'],
-    versions: [ED25519_SEED, FAMILY_SEED],
+    versionTypes: ['ed25519', 'secp256k1', 'dilithium'],
+    versions: [ED25519_SEED, FAMILY_SEED, DILITHIUM_SEED],
     expectedLength: 16,
   },
 ): {
   version: number[]
   bytes: Uint8Array
-  type: 'ed25519' | 'secp256k1' | null
+  type: 'ed25519' | 'secp256k1' | 'dilithium' | null
 } {
   return codecWithXrpAlphabet.decode(seed, opts)
 }
@@ -223,23 +234,51 @@ export function decodeAccountID(accountId: string): Uint8Array {
 export const decodeAddress = decodeAccountID
 /* eslint-enable import/no-unused-modules */
 
-export function decodeNodePublic(base58string: string): Uint8Array {
-  const opts = { versions: [NODE_PUBLIC], expectedLength: 33 }
+export function decodeNodePublic(
+  base58string: string,
+  expectedLength?: number,
+): Uint8Array {
+  const opts = { versions: [NODE_PUBLIC], expectedLength }
   return codecWithXrpAlphabet.decode(base58string, opts).bytes
 }
 
-export function encodeNodePublic(bytes: ByteArray): string {
-  const opts = { versions: [NODE_PUBLIC], expectedLength: 33 }
+export function encodeNodePublic(
+  bytes: ByteArray,
+  expectedLength: number = 33,
+): string {
+  const opts = { versions: [NODE_PUBLIC], expectedLength }
   return codecWithXrpAlphabet.encode(bytes, opts)
 }
 
-export function encodeAccountPublic(bytes: ByteArray): string {
-  const opts = { versions: [ACCOUNT_PUBLIC_KEY], expectedLength: 33 }
+export function encodeAccountPublic(
+  bytes: ByteArray,
+  expectedLength: number = 33,
+): string {
+  const opts = { versions: [ACCOUNT_PUBLIC_KEY], expectedLength }
   return codecWithXrpAlphabet.encode(bytes, opts)
 }
 
-export function decodeAccountPublic(base58string: string): Uint8Array {
-  const opts = { versions: [ACCOUNT_PUBLIC_KEY], expectedLength: 33 }
+export function decodeAccountPublic(
+  base58string: string,
+  expectedLength?: number,
+): Uint8Array {
+  const opts = { versions: [ACCOUNT_PUBLIC_KEY], expectedLength }
+  return codecWithXrpAlphabet.decode(base58string, opts).bytes
+}
+
+export function encodeNodePrivate(
+  bytes: ByteArray,
+  expectedLength: number,
+): string {
+  const opts = { versions: [NODE_PRIVATE], expectedLength }
+  return codecWithXrpAlphabet.encode(bytes, opts)
+}
+
+export function decodeNodePrivate(
+  base58string: string,
+  expectedLength?: number,
+): Uint8Array {
+  const opts = { versions: [NODE_PRIVATE], expectedLength }
   return codecWithXrpAlphabet.decode(base58string, opts).bytes
 }
 

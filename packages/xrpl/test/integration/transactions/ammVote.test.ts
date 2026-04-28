@@ -1,6 +1,6 @@
 /* eslint-disable max-statements -- necessary for readibility */
+import { AMMVote } from '@transia/xrpl'
 import { assert } from 'chai'
-import { AMMVote } from 'xrpl'
 
 import { AMMInfoResponse } from '../../../src'
 import serverUrl from '../serverUrl'

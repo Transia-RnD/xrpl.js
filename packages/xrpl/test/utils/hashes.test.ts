@@ -1,8 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 
+import { encode } from '@transia/ripple-binary-codec'
 import { assert } from 'chai'
-import { encode } from 'ripple-binary-codec'
 
 import {
   EnableAmendment,

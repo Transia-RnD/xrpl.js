@@ -1,5 +1,5 @@
+import { decode } from '@transia/ripple-binary-codec'
 import { assert } from 'chai'
-import { decode } from 'ripple-binary-codec'
 
 import {
   NFTokenMint,

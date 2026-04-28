@@ -1,5 +1,5 @@
 import { Hash160 } from './hash-160'
-import { bytesToHex, hexToBytes, hexToString } from '@xrplf/isomorphic/utils'
+import { bytesToHex, hexToBytes, hexToString } from '@transia/isomorphic/utils'
 
 const XRP_HEX_REGEX = /^0{40}$/
 const ISO_REGEX = /^[A-Z0-9a-z?!@#$%^&*(){}[\]|]{3}$/

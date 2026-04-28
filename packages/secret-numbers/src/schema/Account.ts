@@ -1,7 +1,11 @@
-import { deriveAddress, deriveKeypair, generateSeed } from 'ripple-keypairs'
+import {
+  deriveAddress,
+  deriveKeypair,
+  generateSeed,
+} from '@transia/ripple-keypairs'
 // Use an import alias to avoid name-conflict with the Algorithm type
 // defined in extensions/node_modules/typescript/lib/lib.dom.d.ts
-import type { Algorithm as SignAlgorithm } from 'ripple-keypairs'
+import type { Algorithm as SignAlgorithm } from '@transia/ripple-keypairs'
 
 import {
   entropyToSecret,
